@@ -1,11 +1,17 @@
 {
+  "name": "nuxt3-starter-medusa",
+  "version": "0.1.0",
+  "author": "Florian LEFEBVRE <contact@florian-lefebvre.dev> (https://florian-lefebvre.dev)",
   "private": true,
   "scripts": {
-    "dev": "nuxi dev",
+    "dev": "nuxi dev --port 2000",
     "build": "nuxi build",
-    "start": "node .output/server/index.mjs"
+    "start": "SET PORT=2000 && node .output/server/index.mjs"
   },
   "devDependencies": {
     "nuxt3": "latest"
+  },
+  "dependencies": {
+    "@medusajs/medusa-js": "^1.1.1"
   }
 }
