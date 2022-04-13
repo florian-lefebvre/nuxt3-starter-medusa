@@ -1,11 +1,11 @@
 <template>
-  <div :className="$style.container">
+  <div :class="$style.container">
     <NuxtLink to="/" style="width: '125px'">
       <img src="/medusa-logo.svg" height="40px" width="100%" alt="logo" />
     </NuxtLink>
     <button
       v-if="isCheckout"
-      :className="$style.btn"
+      :class="$style.btn"
       @click="() => updateCartViewDisplay()"
     >
       <ShoppingBagIcon />

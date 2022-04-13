@@ -1,6 +1,6 @@
 <template>
   <div
-    :className="`${$style.blur} ${cartView ? $style.active : null}`"
+    :class="`${$style.blur} ${cartView ? $style.active : null}`"
     :onClick="() => updateCartViewDisplay()"
     @keydown="() => updateCartViewDisplay()"
     role="button"

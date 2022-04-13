@@ -1,21 +1,22 @@
 import { defineStore } from "pinia";
 import client from "~/composables/useClient";
+import { Cart, Product, Order } from "@medusajs/medusa";
 
 export const useStore = defineStore("store", () => {
   const adding = ref(false);
-  const cart = ref<any>({ items: [] });
-  const order = ref({});
-  const products = ref([]);
+  const cart = ref<Partial<Cart>>({ items: [] });
+  const order = ref<Partial<Order>>({});
+  const products = ref<Product[]>([]);
   const currencyCode = ref("eur");
 
-  const _setCart = (payload) => {
+  const _setCart = (payload: Partial<Cart>) => {
     cart.value = payload;
     currencyCode.value = payload.region.currency_code;
   };
-  const _setOrder = (payload) => {
+  const _setOrder = (payload: Partial<Order>) => {
     order.value = payload;
   };
-  const _setProducts = (payload) => {
+  const _setProducts = (payload: Product[]) => {
     products.value = payload;
   };
 
