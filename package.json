@@ -12,6 +12,8 @@
     "nuxt3": "latest"
   },
   "dependencies": {
-    "@medusajs/medusa-js": "^1.1.1"
+    "@medusajs/medusa-js": "^1.1.1",
+    "@pinia/nuxt": "^0.1.8",
+    "pinia": "^2.0.13"
   }
 }
