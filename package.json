@@ -12,6 +12,7 @@
     "nuxt3": "latest"
   },
   "dependencies": {
+    "@heroicons/vue": "^1.0.6",
     "@medusajs/medusa-js": "^1.1.1",
     "@pinia/nuxt": "^0.1.8",
     "@stripe/stripe-js": "^1.27.0",

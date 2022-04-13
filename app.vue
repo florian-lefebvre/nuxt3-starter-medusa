@@ -7,6 +7,8 @@
         <Link rel="icon" href="/favicon.ico" />
       </Head>
     </Html>
-    <NuxtPage />
+    <Layout>
+      <NuxtPage />
+    </Layout>
   </div>
 </template>
