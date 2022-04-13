@@ -12,3 +12,10 @@
     </Layout>
   </div>
 </template>
+
+<script setup lang="ts">
+import { createClient } from "~/composables/useClient";
+onMounted(() => {
+  createClient();
+});
+</script>

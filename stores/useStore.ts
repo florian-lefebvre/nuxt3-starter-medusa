@@ -20,20 +20,16 @@ export const useStore = defineStore("store", () => {
     products.value = payload;
   };
 
-  watchEffect(() => {
-    let cartId;
-    if (localStorage) {
-      cartId = localStorage.getItem("cart_id");
-    }
+  watch([adding, cart, order, products, currencyCode], () => {
+    const cookie = useCookie("cart_id");
+    const cartId = cookie.value;
 
-    if (cartId) {
+    if (cartId !== "") {
       client.carts.retrieve(cartId).then((data) => _setCart(data.cart));
     } else {
       client.carts.create().then((data) => {
         _setCart(data.cart);
-        if (localStorage) {
-          localStorage.setItem("cart_id", data.cart.id);
-        }
+        cookie.value = data.cart.id;
       });
     }
 
@@ -55,9 +51,8 @@ export const useStore = defineStore("store", () => {
       .then((data) => _setCart(data.cart));
   };
   const createCart = async () => {
-    if (localStorage) {
-      localStorage.removeItem("cart_id");
-    }
+    const cookie = useCookie("cart_id");
+    cookie.value = "";
     client.carts.create().then((data) => _setCart(data.cart));
   };
   const removeLineItem = async (lineId: string) => {

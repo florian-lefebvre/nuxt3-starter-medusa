@@ -45,6 +45,7 @@ watch(route, (n) => {
   position: absolute;
   width: 100%;
   z-index: 10;
+  background-color: grey;
 }
 
 .container h1 {

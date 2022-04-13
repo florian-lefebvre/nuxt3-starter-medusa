@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div></div>
+  <!-- <div>
     <div
       v-if="cart"
       :class="`${styles.container} ${orderSummary ? styles.active : ''}`"
@@ -98,12 +99,12 @@
     <div v-else :class="styles.spinnerContainer">
       <PuffLoader />
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
-import styles from "~/assets/css/checkout-summary.module.css";
-import itemStyles from "~/assets/css/cart-view.module.css";
+// import styles from "~/assets/css/checkout-summary.module.css";
+// import itemStyles from "~/assets/css/cart-view.module.css";
 import { Cart } from "@medusajs/medusa";
 import { useDisplay } from "~/stores/useDisplay";
 
