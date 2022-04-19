@@ -1,22 +1,28 @@
 <template>
-  <div :class="$style.container">
-    <NuxtLink to="/" style="width: '125px'">
-      <img src="/medusa-logo.svg" height="40px" width="100%" alt="logo" />
-    </NuxtLink>
-    <button
-      v-if="isCheckout"
-      :class="$style.btn"
-      @click="() => updateCartViewDisplay()"
-    >
-      <ShoppingBagIcon />
-      <span>
-        {{ cart.items.length > 0 ? cart.items.map(quantity).reduce(sum) : 0 }}
-      </span>
-    </button>
+  <div class="bg-violet-60 p-2">
+    <div class="max-w-6xl flex justify-between mx-auto">
+      <div class="text-white hover:text-violet-10 transition-colors">
+        CURRENCY_CODE
+      </div>
+      <div class="flex space-x-4">
+        <NuxtLink
+          to="/sign-in"
+          class="text-white hover:text-violet-10 transition-colors"
+          >Sign in</NuxtLink
+        >
+        <NuxtLink
+          to="/sign-up"
+          class="text-white hover:text-violet-10 transition-colors"
+          >Create an account</NuxtLink
+        >
+      </div>
+    </div>
   </div>
+  <div></div>
 </template>
 
 <script setup lang="ts">
+// https://tailwindui.com/components/ecommerce/components/store-navigation
 import { ShoppingBagIcon } from "@heroicons/vue/outline";
 import { useDisplay } from "~/stores/useDisplay";
 import { useStore } from "~/stores/useStore";
@@ -35,49 +41,3 @@ watch(route, (n) => {
   }
 });
 </script>
-
-<style module>
-.container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 88px;
-  position: absolute;
-  width: 100%;
-  z-index: 10;
-  background-color: grey;
-}
-
-.container h1 {
-  margin: 0;
-}
-
-.logo {
-  font-size: var(--fz-xl);
-  color: var(--logo-color-900);
-}
-
-.btn {
-  border: none;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  font-size: var(--fz-sm);
-  cursor: pointer;
-}
-
-.btn span {
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
-}
-
-.btn svg {
-  font-size: var(--fz-ml);
-}
-
-@media (max-width: 876px) {
-  .container {
-    padding: 20px 22px;
-  }
-}
-</style>

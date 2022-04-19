@@ -4,9 +4,9 @@
   "author": "Florian LEFEBVRE <contact@florian-lefebvre.dev> (https://florian-lefebvre.dev)",
   "private": true,
   "scripts": {
-    "dev": "nuxi dev --port 2000",
+    "dev": "nuxi dev --port 7000",
     "build": "nuxi build",
-    "start": "SET PORT=2000 && node .output/server/index.mjs"
+    "start": "SET PORT=7000 && node .output/server/index.mjs"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^5.0.2",

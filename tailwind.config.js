@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Maax", "sans-serif"],
+      },
       colors: {
         grey: {
           0: "#FFFFFF",

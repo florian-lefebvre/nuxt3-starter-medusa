@@ -1,7 +1,5 @@
 <template>
-  <div :class="cartView ? $style.noscroll : null">
-    <CartView />
-    <LayoutBlur />
+  <div class="flex min-h-screen flex-col bg-white">
     <LayoutNavBar />
     <main>
       <slot />
@@ -9,15 +7,4 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useDisplay } from "~/stores/useDisplay";
-
-const { cartView } = useDisplay();
-</script>
-
-<style module>
-.noscroll {
-  overflow: hidden;
-  height: 100vh;
-}
-</style>
+<script setup lang="ts"></script>
