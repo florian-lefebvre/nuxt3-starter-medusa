@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import client from "~/composables/client";
-import { Cart, Product, Order } from "@medusajs/medusa";
+import { Cart, Product, Order, Region } from "@medusajs/medusa";
 
 export const useStore = defineStore("store", () => {
   const adding = ref(false);
@@ -8,6 +8,7 @@ export const useStore = defineStore("store", () => {
   const order = ref<Partial<Order>>({});
   const products = ref<Product[]>([]);
   const currencyCode = ref("eur");
+  const regions = ref<Region[]>([]);
 
   const _setCart = (payload: Partial<Cart>) => {
     cart.value = payload;
@@ -137,12 +138,22 @@ export const useStore = defineStore("store", () => {
       });
   };
 
+  const getRegions = async () => {
+    const { regions: data } = await client.regions.list();
+    regions.value = data;
+  };
+
+  const initialize = async () => {
+    await getRegions();
+  };
+
   return {
     adding,
     cart,
     order,
     products,
     currencyCode,
+    regions,
     addVariantToCart,
     createCart,
     removeLineItem,
@@ -154,5 +165,7 @@ export const useStore = defineStore("store", () => {
     completeCart,
     retrieveOrder,
     setPaymentSession,
+    getRegions,
+    initialize,
   };
 });

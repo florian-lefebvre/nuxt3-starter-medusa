@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <div>INDEX</div>
+    <div>{{ regions }}</div>
     <div class="text-xl">
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis
       voluptatem distinctio culpa quae cum in repellendus omnis quod, et,
@@ -70,4 +71,8 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useStore } from "~/stores/useStore";
+
+const { regions } = useStore();
+</script>

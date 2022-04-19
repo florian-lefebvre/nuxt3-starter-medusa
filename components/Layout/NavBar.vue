@@ -1,9 +1,29 @@
 <template>
   <div class="py-2 px-4 bg-violet-50">
-    <div class="flex justify-between max-w-6xl mx-auto">
-      <div class="text-white transition-colors hover:text-violet-10">
+    <div class="flex justify-between max-w-6xl mx-auto relative">
+      <Menu as="div">
+        <MenuButton>More</MenuButton>
+        <MenuItems>
+          <MenuItem v-slot="{ active }">
+            <a :class="{ 'bg-blue-500': active }" href="/account-settings">
+              Account settings
+            </a>
+          </MenuItem>
+          <MenuItem v-slot="{ active }">
+            <a :class="{ 'bg-blue-500': active }" href="/account-settings">
+              Documentation
+            </a>
+          </MenuItem>
+          <MenuItem disabled>
+            <span class="opacity-75">Invite a friend (coming soon!)</span>
+          </MenuItem>
+        </MenuItems>
+      </Menu>
+
+      <button class="text-white transition-colors hover:text-violet-10">
         {{ currencyCode.toUpperCase() }}
-      </div>
+      </button>
+
       <div class="flex space-x-4">
         <NuxtLink
           to="/sign-in"
@@ -58,20 +78,8 @@
 <script setup lang="ts">
 // https://tailwindui.com/components/ecommerce/components/store-navigation
 import { ShoppingBagIcon, SearchIcon } from "@heroicons/vue/outline";
-import { useDisplay } from "~/stores/useDisplay";
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { useStore } from "~/stores/useStore";
 
-const { updateCartViewDisplay } = useDisplay();
-const { cart, currencyCode, products } = useStore();
-const { quantity, sum } = useHelpers();
-const isCheckout = ref(true);
-const route = useRoute();
-
-watch(route, (n) => {
-  if (n.fullPath === "/checkout" || n.fullPath === "/payment") {
-    isCheckout.value = true;
-  } else {
-    isCheckout.value = false;
-  }
-});
+const { currencyCode, products } = useStore();
 </script>

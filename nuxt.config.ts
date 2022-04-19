@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
   css: ["@/assets/css/main.css", "@/assets/css/fonts.css"],
   build: {
-    transpile: ["@heroicons/vue"],
+    transpile: ["@heroicons/vue", "@headlessui/vue"],
   },
   tailwindcss: {
     viewer: false,

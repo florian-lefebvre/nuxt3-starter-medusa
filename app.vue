@@ -13,4 +13,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useStore } from "~/stores/useStore";
+
+const { initialize } = useStore();
+useAsyncData("init-medusa", async () => await initialize());
+</script>
