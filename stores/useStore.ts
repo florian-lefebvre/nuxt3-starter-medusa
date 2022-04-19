@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import client from "~/composables/useClient";
+import client from "~/composables/client";
 import { Cart, Product, Order } from "@medusajs/medusa";
 
 export const useStore = defineStore("store", () => {
