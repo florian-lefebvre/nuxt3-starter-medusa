@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^5.0.2",
-    "nuxt3": "^3.0.0-27506322.90da56a"
+    "nuxt3": "^3.0.0-27506322.90da56a",
+    "prettier-plugin-tailwindcss": "^0.1.8"
   },
   "dependencies": {
     "@heroicons/vue": "^1.0.6",

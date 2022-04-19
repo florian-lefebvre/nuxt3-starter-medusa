@@ -1,29 +1,63 @@
 <template>
-  <div class="bg-violet-60 p-2">
-    <div class="max-w-6xl flex justify-between mx-auto">
-      <div class="text-white hover:text-violet-10 transition-colors">
+  <div class="p-2 bg-violet-60">
+    <div class="flex justify-between max-w-6xl mx-auto">
+      <div class="text-white transition-colors hover:text-violet-10">
         CURRENCY_CODE
       </div>
       <div class="flex space-x-4">
         <NuxtLink
           to="/sign-in"
-          class="text-white hover:text-violet-10 transition-colors"
+          class="text-white transition-colors hover:text-violet-10"
           >Sign in</NuxtLink
         >
         <NuxtLink
           to="/sign-up"
-          class="text-white hover:text-violet-10 transition-colors"
+          class="text-white transition-colors hover:text-violet-10"
           >Create an account</NuxtLink
         >
       </div>
     </div>
   </div>
-  <div></div>
+  <div class="sticky top-0 px-4 bg-white border-b border-b-grey-30">
+    <div
+      class="relative flex items-center justify-center max-w-6xl mx-auto h-14"
+    >
+      <NuxtLink to="/" class="absolute right-auto inset-2">
+        <img src="/medusa-logo.svg" class="h-full" />
+      </NuxtLink>
+      <div class="flex space-x-6 items-center">
+        <NuxtLink
+          to="/products"
+          class="border-b-2 hover:border-violet-50 border-transparent font-medium transition-colors text-grey-60 hover:text-violet-50 h-full py-4"
+        >
+          <div>Products</div>
+        </NuxtLink>
+        <NuxtLink
+          to="/collections"
+          class="border-b-2 hover:border-violet-50 border-transparent font-medium transition-colors text-grey-60 hover:text-violet-50 h-full py-4"
+          >Collections</NuxtLink
+        >
+      </div>
+      <div class="absolute left-auto flex items-center space-x-6 inset-0 h-14">
+        <button
+          class="border-b-2 border-transparent transition-colors text-grey-40 hover:text-grey-50 h-full py-4"
+        >
+          <SearchIcon class="h-full" />
+        </button>
+        <button
+          class="border-b-2 border-transparent font-medium transition-colors text-grey-40 hover:text-grey-50 h-full py-4 flex items-end space-x-1"
+        >
+          <ShoppingBagIcon class="h-full" />
+          <span class="leading-none text-xl">2</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 // https://tailwindui.com/components/ecommerce/components/store-navigation
-import { ShoppingBagIcon } from "@heroicons/vue/outline";
+import { ShoppingBagIcon, SearchIcon } from "@heroicons/vue/outline";
 import { useDisplay } from "~/stores/useDisplay";
 import { useStore } from "~/stores/useStore";
 
