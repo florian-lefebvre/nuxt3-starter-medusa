@@ -1,8 +1,8 @@
 <template>
-  <div class="p-2 bg-violet-60">
+  <div class="py-2 px-4 bg-violet-50">
     <div class="flex justify-between max-w-6xl mx-auto">
       <div class="text-white transition-colors hover:text-violet-10">
-        CURRENCY_CODE
+        {{ currencyCode.toUpperCase() }}
       </div>
       <div class="flex space-x-4">
         <NuxtLink
@@ -22,7 +22,7 @@
     <div
       class="relative flex items-center justify-center max-w-6xl mx-auto h-14"
     >
-      <NuxtLink to="/" class="absolute right-auto inset-2">
+      <NuxtLink to="/" class="absolute right-auto inset-y-2 inset-x-0">
         <img src="/medusa-logo.svg" class="h-full" />
       </NuxtLink>
       <div class="flex space-x-6 items-center">
@@ -48,7 +48,7 @@
           class="border-b-2 border-transparent font-medium transition-colors text-grey-40 hover:text-grey-50 h-full py-4 flex items-end space-x-1"
         >
           <ShoppingBagIcon class="h-full" />
-          <span class="leading-none text-xl">2</span>
+          <span class="leading-none text-xl">{{ products.length }}</span>
         </button>
       </div>
     </div>
@@ -62,7 +62,7 @@ import { useDisplay } from "~/stores/useDisplay";
 import { useStore } from "~/stores/useStore";
 
 const { updateCartViewDisplay } = useDisplay();
-const { cart } = useStore();
+const { cart, currencyCode, products } = useStore();
 const { quantity, sum } = useHelpers();
 const isCheckout = ref(true);
 const route = useRoute();
