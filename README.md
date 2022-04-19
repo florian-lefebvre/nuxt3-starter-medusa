@@ -1,29 +1,21 @@
-# Nuxt 3 Minimal Starter
+# Medusa Nuxt 3 Starter
 
-We recommend to look at the [documentation](https://v3.nuxtjs.org).
+## Roadmap
 
-## Setup
+### Routes
 
-Make sure to install the dependencies
-
-```bash
-yarn install
-```
-
-## Development
-
-Start the development server on http://localhost:3000
-
-```bash
-yarn dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-yarn build
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment).
+- [ ] /
+- [ ] /products
+- [ ] /products/[slug]
+- [ ] /collections
+- [ ] /collections/[slug]
+- [ ] /account
+- [ ] /sign-in
+- [ ] /sign-up
+- [ ] /shopping-cart
+- [ ] /checkout
+- [ ] /order-confirmed
+- [ ] /create-return
+- [ ] /faq
+- [ ] /terms-and-conditions
+- [ ] /privacy-policy

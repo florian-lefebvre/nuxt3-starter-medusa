@@ -9,6 +9,7 @@
     "start": "SET PORT=2000 && node .output/server/index.mjs"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^5.0.2",
     "nuxt3": "^3.0.0-27506322.90da56a"
   },
   "dependencies": {
