@@ -10,11 +10,11 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^5.0.2",
-    "nuxt3": "^3.0.0-27506322.90da56a",
+    "nuxt": "3.0.0-rc.0",
     "prettier-plugin-tailwindcss": "^0.1.8"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.5.0",
+    "@headlessui/vue": "1.4.2",
     "@heroicons/vue": "^1.0.6",
     "@medusajs/medusa": "^1.2.1",
     "@medusajs/medusa-js": "^1.1.1",

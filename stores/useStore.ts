@@ -1,40 +1,22 @@
 import { defineStore } from "pinia";
-import client from "~/composables/client";
 import { Cart, Product, Order, Region } from "@medusajs/medusa";
 
 export const useStore = defineStore("store", () => {
+  const { $medusa: client } = useNuxtApp();
   const adding = ref(false);
-  const cart = ref<Partial<Cart>>({ items: [] });
+  const cart = ref<Partial<Cart>>();
+  const currencyCode = computed(
+    () => cart.value?.region.currency_code ?? "eur"
+  );
   const order = ref<Partial<Order>>({});
   const products = ref<Product[]>([]);
-  const currencyCode = ref("eur");
   const regions = ref<Region[]>([]);
 
-  const _setCart = (payload: Partial<Cart>) => {
-    cart.value = payload;
-    currencyCode.value = payload.region.currency_code;
-  };
-  const _setOrder = (payload: Partial<Order>) => {
-    order.value = payload;
-  };
-  const _setProducts = (payload: Product[]) => {
-    products.value = payload;
-  };
+  watch([adding, cart, order, products], async () => {
+    await retrieveCart();
 
-  watch([adding, cart, order, products, currencyCode], () => {
-    const cookie = useCookie("cart_id");
-    const cartId = cookie.value;
-
-    if (cartId !== "") {
-      client.carts.retrieve(cartId).then((data) => _setCart(data.cart));
-    } else {
-      client.carts.create().then((data) => {
-        _setCart(data.cart);
-        cookie.value = data.cart.id;
-      });
-    }
-
-    client.products.list().then((data) => _setProducts(data.products));
+    const data = await client.products.list();
+    products.value = data.products;
   });
 
   const addVariantToCart = async ({
@@ -44,23 +26,37 @@ export const useStore = defineStore("store", () => {
     variantId: string;
     quantity: number;
   }) => {
-    client.carts.lineItems
-      .create(cart.value.id, {
-        variant_id: variantId,
-        quantity,
-      })
-      .then((data) => _setCart(data.cart));
+    const data = await client.carts.lineItems.create(cart.value.id, {
+      variant_id: variantId,
+      quantity,
+    });
+    cart.value = data.cart;
   };
+
   const createCart = async () => {
-    const cookie = useCookie("cart_id");
-    cookie.value = "";
-    client.carts.create().then((data) => _setCart(data.cart));
+    const cartId = useCookie("cart_id");
+
+    const data = await client.carts.create();
+    cart.value = data.cart;
+    cartId.value = cart.value.id;
   };
+
+  const retrieveCart = async () => {
+    const cartId = useCookie("cart_id");
+
+    if (cartId.value !== "") {
+      return await createCart();
+    }
+
+    const data = await client.carts.retrieve(cartId.value);
+    cart.value = data.cart;
+  };
+
   const removeLineItem = async (lineId: string) => {
-    client.carts.lineItems
-      .delete(cart.value.id, lineId)
-      .then((data) => _setCart(data.cart));
+    const data = await client.carts.lineItems.delete(cart.value.id, lineId);
+    cart.value = data.cart;
   };
+
   const updateLineItem = async ({
     lineId,
     quantity,
@@ -68,14 +64,15 @@ export const useStore = defineStore("store", () => {
     lineId: string;
     quantity: number;
   }) => {
-    client.carts.lineItems
-      .update(cart.value.id, lineId, { quantity })
-      .then((data) => _setCart(data.cart));
+    const data = await client.carts.lineItems.update(cart.value.id, lineId, {
+      quantity,
+    });
+    cart.value = data.cart;
   };
+
   const getShippingOptions = async () => {
-    const data = await client.shippingOptions
-      .listCartOptions(cart.value.id)
-      .then((res) => res.shipping_options);
+    const { shipping_options: data } =
+      await client.shippingOptions.listCartOptions(cart.value.id);
 
     if (data) {
       return data;
@@ -83,34 +80,31 @@ export const useStore = defineStore("store", () => {
       return undefined;
     }
   };
+
   const setShippingMethod = async (id: string) => {
-    return await client.carts
-      .addShippingMethod(cart.value.id, {
-        option_id: id,
-      })
-      .then((data) => _setCart(data.cart));
+    const data = await client.carts.addShippingMethod(cart.value.id, {
+      option_id: id,
+    });
+    cart.value = data.cart;
   };
+
   const updateAddress = async (address: string, email: string) => {
-    client.carts
-      .update(cart.value.id, {
-        shipping_address: address,
-        billing_address: address,
-        email,
-      })
-      .then((data) => _setCart(data.cart));
+    const data = await client.carts.update(cart.value.id, {
+      shipping_address: address,
+      billing_address: address,
+      email,
+    });
+    cart.value = data.cart;
   };
+
   const createPaymentSession = async () => {
-    return await client.carts
-      .createPaymentSessions(cart.value.id)
-      .then((data) => {
-        _setCart(data.cart);
-        return data;
-      });
+    const data = await client.carts.createPaymentSessions(cart.value.id);
+    cart.value = data.cart;
+    return data;
   };
+
   const completeCart = async () => {
-    const data = await client.carts
-      .complete(cart.value.id)
-      .then((data) => data);
+    const data = await client.carts.complete(cart.value.id);
 
     if (data) {
       return data.data;
@@ -118,8 +112,9 @@ export const useStore = defineStore("store", () => {
       return undefined;
     }
   };
+
   const retrieveOrder = async (orderId: string) => {
-    const data = await client.orders.retrieve(orderId).then((data) => data);
+    const data = await client.orders.retrieve(orderId);
 
     if (data) {
       return data.order;
@@ -127,15 +122,13 @@ export const useStore = defineStore("store", () => {
       return undefined;
     }
   };
+
   const setPaymentSession = async (provider: string) => {
-    return await client.carts
-      .setPaymentSession(cart.value.id, {
-        provider_id: provider,
-      })
-      .then((data) => {
-        _setCart(data.cart);
-        return data;
-      });
+    const data = await client.carts.setPaymentSession(cart.value.id, {
+      provider_id: provider,
+    });
+    cart.value = data.cart;
+    return data;
   };
 
   const getRegions = async () => {
@@ -156,6 +149,7 @@ export const useStore = defineStore("store", () => {
     regions,
     addVariantToCart,
     createCart,
+    retrieveCart,
     removeLineItem,
     updateLineItem,
     getShippingOptions,
