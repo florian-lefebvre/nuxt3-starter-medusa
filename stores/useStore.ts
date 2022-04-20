@@ -3,19 +3,20 @@ import { Cart, Product, Order, Region } from "@medusajs/medusa";
 
 export const useStore = defineStore("store", () => {
   const { $medusa: client } = useNuxtApp();
-  // const adding = ref(false);
-  const cart = ref<Partial<Cart>>();
-  const currencyCode = computed(
-    () => cart.value?.region.currency_code ?? "eur"
-  );
-  // const order = ref<Partial<Order>>({});
-  // const products = ref<Product[]>([]);
-  const regions = ref<Region[]>([]);
-  // const initialized = ref(false);
 
   const cookies = ref({
     cartId: useCookie("cart_id"),
+    region: useCookie<Region>("region"),
+    countryName: useCookie("country_name"),
   });
+
+  const cart = ref<Partial<Cart>>();
+  const region = computed(() => cart.value.region);
+  const currencyCode = computed(() => region.value.currency_code);
+  const countryName = computed(() => cookies.value.countryName);
+  const regions = ref<Region[]>([]);
+  // const order = ref<Partial<Order>>({});
+  // const products = ref<Product[]>([]);
 
   // watch([adding, cart, order], async () => {
   //   if (initialized.value) {
@@ -44,6 +45,8 @@ export const useStore = defineStore("store", () => {
     const data = await client.carts.create({});
     cart.value = data.cart;
     cookies.value.cartId = cart.value.id;
+    cookies.value.region = cart.value.region;
+    cookies.value.countryName = "France";
   };
 
   const retrieveCart = async () => {
@@ -139,11 +142,28 @@ export const useStore = defineStore("store", () => {
     regions.value = data;
   };
 
+  const updateCart = async () => {
+    const data = await client.carts.update(cart.value.id, cart.value);
+    cart.value = data.cart;
+  };
+
+  const setRegion = async ({
+    region,
+    countryName,
+  }: {
+    region: Region;
+    countryName: string;
+  }) => {
+    cart.value.region = region;
+    cookies.value.region = region;
+    cookies.value.countryName = countryName;
+  };
+
   const initialize = async () => {
     await retrieveCart();
     await getRegions();
     watch([cart], async () => {
-      await retrieveCart();
+      await updateCart();
     });
   };
 
@@ -154,6 +174,8 @@ export const useStore = defineStore("store", () => {
     // products,
     currencyCode,
     regions,
+    region,
+    countryName,
     // addVariantToCart,
     createCart,
     retrieveCart,
@@ -167,6 +189,7 @@ export const useStore = defineStore("store", () => {
     // retrieveOrder,
     // setPaymentSession,
     getRegions,
+    setRegion,
     initialize,
   };
 });

@@ -1,14 +1,6 @@
 <template>
   <div class="">
     <div>INDEX</div>
-    <button @click="createCart()">test</button>
-    <div>
-      <div v-for="region in regions">
-        <div v-for="country in region.countries">
-          {{ country.display_name }} / {{ region.currency_code.toUpperCase() }}
-        </div>
-      </div>
-    </div>
     <div class="text-xl">
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis
       voluptatem distinctio culpa quae cum in repellendus omnis quod, et,
@@ -78,8 +70,4 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { useStore } from "~/stores/useStore";
-
-const { regions, createCart } = useStore();
-</script>
+<script setup lang="ts"></script>

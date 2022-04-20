@@ -6,7 +6,7 @@
           <MenuButton
             class="text-white transition-colors hover:text-violet-10 inline-flex items-center space-x-1"
           >
-            <span>{{ currencyCode.toUpperCase() }}</span>
+            <span>{{ countryName }} / {{ currencyCode.toUpperCase() }}</span>
             <ChevronDownIcon class="w-4 h-4" aria-hidden="true" />
           </MenuButton>
         </div>
@@ -23,49 +23,40 @@
             class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
           >
             <div class="py-1">
-              <MenuItem v-slot="{ active }">
-                <a
-                  href="#"
+              <MenuItem
+                v-slot="{ active }"
+                v-for="e in countries"
+                @click.native="
+                  setRegion({
+                    countryName: e.country.display_name,
+                    region: e.region,
+                  })
+                "
+              >
+                <button
                   :class="[
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm',
+                    active ? 'bg-gray-100 text-grey-90' : 'text-grey-70',
+                    e.country.display_name === countryName
+                      ? 'bg-violet-10 text-violet-90 font-medium'
+                      : '',
                   ]"
-                  >Account settings</a
+                  class="px-4 py-2 text-sm flex space-x-2 items-center w-full"
                 >
-              </MenuItem>
-              <MenuItem v-slot="{ active }">
-                <a
-                  href="#"
-                  :class="[
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm',
-                  ]"
-                  >Support</a
-                >
-              </MenuItem>
-              <MenuItem v-slot="{ active }">
-                <a
-                  href="#"
-                  :class="[
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm',
-                  ]"
-                  >License</a
-                >
-              </MenuItem>
-              <form method="POST" action="#">
-                <MenuItem v-slot="{ active }">
-                  <button
-                    type="submit"
+                  <div>
+                    {{ e.country.display_name }}
+                  </div>
+                  <div
                     :class="[
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full text-left px-4 py-2 text-sm',
+                      e.country.display_name === countryName
+                        ? 'text-violet-60'
+                        : 'text-grey-60',
                     ]"
+                    class="text-xs font-normal"
                   >
-                    Sign out
-                  </button>
-                </MenuItem>
-              </form>
+                    {{ e.region.currency_code.toUpperCase() }}
+                  </div>
+                </button>
+              </MenuItem>
             </div>
           </MenuItems>
         </transition>
@@ -131,6 +122,20 @@ import {
 } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { useStore } from "~/stores/useStore";
+import { Country, Region } from "@medusajs/medusa";
 
-const { currencyCode, cart } = useStore();
+const { currencyCode, cart, regions, setRegion, countryName } = useStore();
+
+const countries = computed(() => {
+  const _countries: {
+    country: Country;
+    region: Region;
+  }[] = [];
+  for (const region of regions as Region[]) {
+    for (const country of region.countries as Country[]) {
+      _countries.push({ country, region });
+    }
+  }
+  return _countries;
+});
 </script>
