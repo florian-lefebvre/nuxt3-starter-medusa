@@ -17,5 +17,5 @@
 import { useStore } from "~/stores/useStore";
 
 const { initialize } = useStore();
-useAsyncData("init-medusa", async () => await initialize());
+await useAsyncData("init-medusa", () => initialize());
 </script>

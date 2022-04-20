@@ -3,21 +3,28 @@ import { Cart, Product, Order, Region } from "@medusajs/medusa";
 
 export const useStore = defineStore("store", () => {
   const { $medusa: client } = useNuxtApp();
-  const adding = ref(false);
+  // const adding = ref(false);
   const cart = ref<Partial<Cart>>();
   const currencyCode = computed(
     () => cart.value?.region.currency_code ?? "eur"
   );
-  const order = ref<Partial<Order>>({});
-  const products = ref<Product[]>([]);
+  // const order = ref<Partial<Order>>({});
+  // const products = ref<Product[]>([]);
   const regions = ref<Region[]>([]);
+  // const initialized = ref(false);
 
-  watch([adding, cart, order, products], async () => {
-    await retrieveCart();
-
-    const data = await client.products.list();
-    products.value = data.products;
+  const cookies = ref({
+    cartId: useCookie("cart_id"),
   });
+
+  // watch([adding, cart, order], async () => {
+  //   if (initialized.value) {
+  //     await retrieveCart();
+  //   }
+
+  //   const data = await client.products.list();
+  //   products.value = data.products;
+  // });
 
   const addVariantToCart = async ({
     variantId,
@@ -34,21 +41,26 @@ export const useStore = defineStore("store", () => {
   };
 
   const createCart = async () => {
-    const cartId = useCookie("cart_id");
-
-    const data = await client.carts.create();
-    cart.value = data.cart;
-    cartId.value = cart.value.id;
+    console.log("create");
+    // const data = await client.carts.create();
+    // const data = await client.carts.create().then((data) => data);
+    client.carts.create().then((data) => {
+      cart.value = data.cart;
+      // cookies.value.cartId = cart.value.id;
+      // console.log(cookies.value.cartId);
+    });
+    // console.log(data);
+    // cart.value = data.cart;
+    // console.log(cart.value);
   };
 
   const retrieveCart = async () => {
-    const cartId = useCookie("cart_id");
-
-    if (cartId.value !== "") {
-      return await createCart();
+    if (cookies.value.cartId === undefined) {
+      await createCart();
+      return;
     }
 
-    const data = await client.carts.retrieve(cartId.value);
+    const data = await client.carts.retrieve(cookies.value.cartId);
     cart.value = data.cart;
   };
 
@@ -134,31 +146,37 @@ export const useStore = defineStore("store", () => {
   const getRegions = async () => {
     const { regions: data } = await client.regions.list();
     regions.value = data;
+    console.log(regions.value);
   };
 
   const initialize = async () => {
+    console.log("init");
+    await retrieveCart();
     await getRegions();
+    watch([cart], async () => {
+      await retrieveCart();
+    });
   };
 
   return {
-    adding,
+    // adding,
     cart,
-    order,
-    products,
+    // order,
+    // products,
     currencyCode,
     regions,
-    addVariantToCart,
+    // addVariantToCart,
     createCart,
     retrieveCart,
-    removeLineItem,
-    updateLineItem,
-    getShippingOptions,
-    setShippingMethod,
-    updateAddress,
-    createPaymentSession,
-    completeCart,
-    retrieveOrder,
-    setPaymentSession,
+    // removeLineItem,
+    // updateLineItem,
+    // getShippingOptions,
+    // setShippingMethod,
+    // updateAddress,
+    // createPaymentSession,
+    // completeCart,
+    // retrieveOrder,
+    // setPaymentSession,
     getRegions,
     initialize,
   };

@@ -1,10 +1,75 @@
 <template>
   <div class="py-2 px-4 bg-violet-50">
     <div class="flex justify-between max-w-6xl mx-auto relative">
+      <Menu as="div" class="relative inline-block text-left">
+        <div>
+          <MenuButton
+            class="text-white transition-colors hover:text-violet-10 inline-flex items-center space-x-1"
+          >
+            <span>{{ currencyCode.toUpperCase() }}</span>
+            <ChevronDownIcon class="w-4 h-4" aria-hidden="true" />
+          </MenuButton>
+        </div>
 
-      <button class="text-white transition-colors hover:text-violet-10">
-        {{ currencyCode.toUpperCase() }}
-      </button>
+        <transition
+          enter-active-class="transition ease-out duration-100"
+          enter-from-class="transform opacity-0 scale-95"
+          enter-to-class="transform opacity-100 scale-100"
+          leave-active-class="transition ease-in duration-75"
+          leave-from-class="transform opacity-100 scale-100"
+          leave-to-class="transform opacity-0 scale-95"
+        >
+          <MenuItems
+            class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+          >
+            <div class="py-1">
+              <MenuItem v-slot="{ active }">
+                <a
+                  href="#"
+                  :class="[
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm',
+                  ]"
+                  >Account settings</a
+                >
+              </MenuItem>
+              <MenuItem v-slot="{ active }">
+                <a
+                  href="#"
+                  :class="[
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm',
+                  ]"
+                  >Support</a
+                >
+              </MenuItem>
+              <MenuItem v-slot="{ active }">
+                <a
+                  href="#"
+                  :class="[
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm',
+                  ]"
+                  >License</a
+                >
+              </MenuItem>
+              <form method="POST" action="#">
+                <MenuItem v-slot="{ active }">
+                  <button
+                    type="submit"
+                    :class="[
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block w-full text-left px-4 py-2 text-sm',
+                    ]"
+                  >
+                    Sign out
+                  </button>
+                </MenuItem>
+              </form>
+            </div>
+          </MenuItems>
+        </transition>
+      </Menu>
 
       <div class="flex space-x-4">
         <NuxtLink
@@ -24,7 +89,7 @@
     <div
       class="relative flex items-center justify-center max-w-6xl mx-auto h-14"
     >
-      <NuxtLink to="/" class="absolute right-auto inset-y-2 inset-x-0">
+      <NuxtLink to="/" class="absolute right-auto inset-y-3 inset-x-0">
         <img src="/medusa-logo.svg" class="h-full" />
       </NuxtLink>
       <div class="flex space-x-6 items-center">
@@ -50,7 +115,8 @@
           class="border-b-2 border-transparent font-medium transition-colors text-grey-40 hover:text-grey-50 h-full py-4 flex items-end space-x-1"
         >
           <ShoppingBagIcon class="h-full" />
-          <span class="leading-none text-xl">{{ products.length }}</span>
+          <!-- <span class="leading-none text-xl">{{ cart.items.length }}</span> -->
+          <span class="leading-none text-xl">X</span>
         </button>
       </div>
     </div>
@@ -59,9 +125,13 @@
 
 <script setup lang="ts">
 // https://tailwindui.com/components/ecommerce/components/store-navigation
-import { ShoppingBagIcon, SearchIcon } from "@heroicons/vue/outline";
+import {
+  ShoppingBagIcon,
+  SearchIcon,
+  ChevronDownIcon,
+} from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { useStore } from "~/stores/useStore";
 
-const { currencyCode, products } = useStore();
+const { currencyCode, cart } = useStore();
 </script>

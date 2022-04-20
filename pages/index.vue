@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <div>INDEX</div>
+    <button @click="createCart()">test</button>
     <div>
       <div v-for="region in regions">
         <div v-for="country in region.countries">
@@ -80,5 +81,5 @@
 <script setup lang="ts">
 import { useStore } from "~/stores/useStore";
 
-const { regions } = useStore();
+const { regions, createCart } = useStore();
 </script>
