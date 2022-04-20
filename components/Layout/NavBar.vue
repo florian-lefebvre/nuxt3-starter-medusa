@@ -115,8 +115,7 @@
           class="border-b-2 border-transparent font-medium transition-colors text-grey-40 hover:text-grey-50 h-full py-4 flex items-end space-x-1"
         >
           <ShoppingBagIcon class="h-full" />
-          <!-- <span class="leading-none text-xl">{{ cart.items.length }}</span> -->
-          <span class="leading-none text-xl">X</span>
+          <span class="leading-none text-xl">{{ cart.items.length }}</span>
         </button>
       </div>
     </div>
