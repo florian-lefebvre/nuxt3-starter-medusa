@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2 px-4 bg-violet-50">
+  <!--<div class="py-2 px-4 bg-violet-50">
     <div class="flex justify-between max-w-6xl mx-auto relative">
       <Menu as="div" class="relative inline-block text-left">
         <div>
@@ -110,7 +110,8 @@
         </button>
       </div>
     </div>
-  </div>
+  </div>-->
+  <div>NAVBAR</div>
 </template>
 
 <script setup lang="ts">
@@ -121,21 +122,21 @@ import {
   ChevronDownIcon,
 } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { useStore } from "~/stores/useStore";
+// import { useStore } from "~/stores/useStore";
 import { Country, Region } from "@medusajs/medusa";
 
-const { currencyCode, cart, regions, setRegion, countryName } = useStore();
+// const { currencyCode, cart, regions, setRegion, countryName } = useStore();
 
-const countries = computed(() => {
-  const _countries: {
-    country: Country;
-    region: Region;
-  }[] = [];
-  for (const region of regions as Region[]) {
-    for (const country of region.countries as Country[]) {
-      _countries.push({ country, region });
-    }
-  }
-  return _countries;
-});
+// const countries = computed(() => {
+//   const _countries: {
+//     country: Country;
+//     region: Region;
+//   }[] = [];
+//   for (const region of regions as Region[]) {
+//     for (const country of region.countries as Country[]) {
+//       _countries.push({ country, region });
+//     }
+//   }
+//   return _countries;
+// });
 </script>

@@ -14,12 +14,11 @@
     "prettier-plugin-tailwindcss": "^0.1.8"
   },
   "dependencies": {
+    "@harlem/extension-action": "^2.3.3",
     "@headlessui/vue": "1.4.2",
     "@heroicons/vue": "^1.0.6",
     "@medusajs/medusa": "^1.2.1",
     "@medusajs/medusa-js": "^1.1.1",
-    "@pinia/nuxt": "^0.1.8",
-    "@stripe/stripe-js": "^1.27.0",
-    "pinia": "^2.0.13"
+    "@nuxtjs/harlem": "^1.0.1"
   }
 }
