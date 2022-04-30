@@ -2,7 +2,11 @@ import { defineNuxtConfig } from "nuxt";
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/harlem"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/harlem",
+    "./modules/harlemAutoImports",
+  ],
   css: ["@/assets/css/main.css", "@/assets/css/fonts.css"],
   build: {
     transpile: ["@heroicons/vue", "@headlessui/vue"],

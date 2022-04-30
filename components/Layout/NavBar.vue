@@ -111,7 +111,11 @@
       </div>
     </div>
   </div>-->
-  <div>NAVBAR</div>
+  <div>
+    <div>NAVBAR</div>
+    <button @click="getRegions()">GET REGIONS</button>
+    <div>{{ regions }}</div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -122,8 +126,9 @@ import {
   ChevronDownIcon,
 } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-// import { useStore } from "~/stores/useStore";
 import { Country, Region } from "@medusajs/medusa";
+
+const { regions, getRegions } = useStore();
 
 // const { currencyCode, cart, regions, setRegion, countryName } = useStore();
 

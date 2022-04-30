@@ -1,16 +1,11 @@
-import Medusa from "@medusajs/medusa-js";
+import { $medusa, setMedusa } from "~/utils/medusa";
 
 export default defineNuxtPlugin((nuxtApp) => {
-  const runtimeConfig = useRuntimeConfig();
-
-  const client = new Medusa({
-    baseUrl: runtimeConfig.public.BACKEND_URL,
-    maxRetries: 2,
-  });
-
+  const config = useRuntimeConfig().public;
+  setMedusa(config.BACKEND_URL);
   return {
     provide: {
-      medusa: client,
+      medusa: $medusa,
     },
   };
 });
