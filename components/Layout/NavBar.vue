@@ -1,7 +1,8 @@
 <template>
-  <!--<div class="py-2 px-4 bg-violet-50">
-    <div class="flex justify-between max-w-6xl mx-auto relative">
-      <Menu as="div" class="relative inline-block text-left">
+  <div class="py-2 px-4 bg-violet-50">
+    <div class="flex custom-container justify-between relative">
+      <div>TEMP</div>
+      <!--<Menu as="div" class="relative inline-block text-left">
         <div>
           <MenuButton
             class="text-white transition-colors hover:text-violet-10 inline-flex items-center space-x-1"
@@ -60,7 +61,7 @@
             </div>
           </MenuItems>
         </transition>
-      </Menu>
+      </Menu>-->
 
       <div class="flex space-x-4">
         <NuxtLink
@@ -76,9 +77,9 @@
       </div>
     </div>
   </div>
-  <div class="sticky top-0 px-4 bg-white border-b border-b-grey-30">
+  <div class="sticky top-0 px-4 bg-white border-b border-b-grey-30 z-50">
     <div
-      class="relative flex items-center justify-center max-w-6xl mx-auto h-14"
+      class="relative flex items-center justify-center custom-container h-14"
     >
       <NuxtLink to="/" class="absolute right-auto inset-y-3 inset-x-0">
         <img src="/medusa-logo.svg" class="h-full" />
@@ -106,16 +107,10 @@
           class="border-b-2 border-transparent font-medium transition-colors text-grey-40 hover:text-grey-50 h-full py-4 flex items-end space-x-1"
         >
           <ShoppingBagIcon class="h-full" />
-          <span class="leading-none text-xl">{{ cart.items.length }}</span>
+          <!-- <span class="leading-none text-xl">{{ cart.items.length }}</span> -->
         </button>
       </div>
     </div>
-  </div>-->
-  <div>
-    <div>NAVBAR</div>
-    <!-- <button @click="getRegions()">GET REGIONS</button> -->
-    <!-- <div>{{ regions }}</div> -->
-    <button @click="init()">INIT</button>
   </div>
 </template>
 
@@ -129,14 +124,11 @@ import {
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { Country, Region } from "@medusajs/medusa";
 
-// const { regions, getRegions, temp, countryName } = useStore();
 const {
-  // getRegions,
-  state: { regions },
-  init,
+  state: { cart, regions, countryName },
+  currencyCode,
+  setRegion,
 } = useStore();
-
-// const { currencyCode, cart, regions, setRegion, countryName } = useStore();
 
 // const countries = computed(() => {
 //   const _countries: {
