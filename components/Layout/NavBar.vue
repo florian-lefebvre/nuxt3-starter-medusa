@@ -113,8 +113,9 @@
   </div>-->
   <div>
     <div>NAVBAR</div>
-    <button @click="getRegions()">GET REGIONS</button>
-    <div>{{ regions }}</div>
+    <!-- <button @click="getRegions()">GET REGIONS</button> -->
+    <!-- <div>{{ regions }}</div> -->
+    <button @click="init()">INIT</button>
   </div>
 </template>
 
@@ -128,7 +129,12 @@ import {
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { Country, Region } from "@medusajs/medusa";
 
-const { regions, getRegions } = useStore();
+// const { regions, getRegions, temp, countryName } = useStore();
+const {
+  // getRegions,
+  state: { regions },
+  init,
+} = useStore();
 
 // const { currencyCode, cart, regions, setRegion, countryName } = useStore();
 

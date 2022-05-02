@@ -31,7 +31,6 @@ const updateCheckoutStep = mutation<number>(
 );
 
 export const useDisplay = () => ({
-  ...state,
   updateCartViewDisplay,
   updateOrderSummaryDisplay,
   updateCheckoutStep,
