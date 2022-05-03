@@ -29,7 +29,6 @@ export const useStoreStorage = ({ key, state, exclude = [] }: Options) => {
 
     // Watch for changes in state and update cookies
     const handler = () => {
-        console.log("handler");
         for (const [k, v] of Object.entries(cookies)) {
             v.value = state.value[k].value;
         }

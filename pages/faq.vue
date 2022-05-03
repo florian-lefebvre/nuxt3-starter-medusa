@@ -8,8 +8,5 @@
 +
 
 <script setup lang="ts">
-const {
-    actions: { updateCartViewDisplay },
-    state: { cartView },
-} = useDisplay();
+const { updateCartViewDisplay, cartView } = useDisplay();
 </script>

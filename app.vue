@@ -14,8 +14,6 @@
 </template>
 
 <script setup lang="ts">
-const {
-    actions: { initialize },
-} = useStore();
+const { initialize } = useStore();
 await useAsyncData("init-medusa", () => initialize());
 </script>

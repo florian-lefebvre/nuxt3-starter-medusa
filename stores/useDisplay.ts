@@ -18,15 +18,11 @@ export const useDisplay = defineStore(KEY, () => {
     };
 
     return {
-        state: {
-            cartView: computed(() => cartView),
-            orderSummary: computed(() => orderSummary),
-            checkoutStep: computed(() => checkoutStep),
-        },
-        actions: {
-            updateCartViewDisplay,
-            updateOrderSummaryDisplay,
-            updateCheckoutStep,
-        },
+        cartView,
+        orderSummary,
+        checkoutStep,
+        updateCartViewDisplay,
+        updateOrderSummaryDisplay,
+        updateCheckoutStep,
     };
 });

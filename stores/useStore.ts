@@ -5,72 +5,6 @@ import { Ref, ComputedRef } from "vue";
 
 const KEY = "store";
 
-type StateAsRef<T> = {
-    [P in keyof T]: Ref<T[P]>;
-};
-
-type StateAsComputed<T> = {
-    [P in keyof T]: ComputedRef<T[P]>;
-};
-
-type Args<T, U> = {
-    state: T;
-    getters?: U extends { [key: string]: (state: StateAsRef<T>) => any }
-        ? U
-        : {};
-    // getters?: {
-    //     [key: string]: (state: StateAsRef<T>) => any;
-    // };
-    actions?: {
-        [key: string]: (state: StateAsRef<T>) => Promise<any> | any;
-    };
-};
-
-const createStore = <T, U>(
-    key: string,
-    args: Args<T, U>
-): (() => {
-    state: StateAsComputed<T>;
-    getters?: {
-        [key: string]: ComputedRef<any>;
-    };
-}) => {
-    const state = args.state;
-    const stateAsRef: StateAsRef<T> = Object.fromEntries(
-        Object.entries(state).map(
-            ([key, value]) => [key, ref(value)] as [keyof T, Ref<T[keyof T]>]
-        )
-    ) as any;
-    const stateAsComputedRef: StateAsComputed<T> = Object.fromEntries(
-        Object.entries(state).map(
-            ([key, value]) =>
-                [key, computed(value)] as [keyof T, ComputedRef<T[keyof T]>]
-        )
-    ) as any;
-
-    const getters = Object.fromEntries(
-        Object.entries(args.getters).map(([key, value]) => [
-            key,
-            computed(() => value(stateAsRef)),
-        ])
-    );
-
-    return () => ({ state: stateAsComputedRef, getters });
-};
-
-const x = createStore("x", {
-    state: {
-        cartView: false,
-    },
-    getters: {
-        isTrue: (state) => state.cartView.value,
-    },
-});
-const {
-    state: { cartView },
-    getters: { isTrue },
-} = x();
-
 export const useStore = defineStore(KEY, () => {
     const { $medusa } = useNuxtApp();
 
@@ -132,20 +66,16 @@ export const useStore = defineStore(KEY, () => {
     };
 
     return {
-        state: {
-            cart: computed(() => cart),
-            countryName: computed(() => countryName),
-            regions: computed(() => regions),
-            region: computed(() => region),
-            currencyCode: computed(() => currencyCode),
-        },
-        actions: {
-            createCart,
-            retrieveCart,
-            getRegions,
-            setRegion,
-            initialize,
-        },
+        cart,
+        countryName,
+        regions,
+        region,
+        currencyCode,
+        createCart,
+        retrieveCart,
+        getRegions,
+        setRegion,
+        initialize,
         // order,
         // products,
         // adding,

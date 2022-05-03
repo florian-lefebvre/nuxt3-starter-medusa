@@ -133,20 +133,18 @@ import {
     ChevronDownIcon,
 } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { useStore } from "~/stores/useStore";
 import { Country, Region } from "@medusajs/medusa";
 
-const {
-    state: { cart, regions, countryName, currencyCode },
-    actions: { setRegion },
-} = useStore();
+const store = useStore();
+const { cart, countryName, regions, currencyCode } = storeToRefs(store);
+const { setRegion } = store;
 
 const countries = computed(() => {
     const _countries: {
         country: Country;
         region: Region;
     }[] = [];
-    for (const region of regions as Region[]) {
+    for (const region of regions.value as Region[]) {
         for (const country of region.countries as Country[]) {
             _countries.push({ country, region });
         }
