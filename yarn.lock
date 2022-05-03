@@ -375,45 +375,6 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@harlem/core@^2.2.3":
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/@harlem/core/-/core-2.3.3.tgz#b5db3bc4d8f38a749188662459bb490cb617cc82"
-  integrity sha512-1pvrxJ4YYjOTDu4k2a1gzKv6xMaIrpwlZPYkW+sU7uRV9+teVKv/f+8vflG+xDXSt24b5UPTc2gYR5Rj6quFrw==
-  dependencies:
-    "@harlem/utilities" "^2.3.3"
-
-"@harlem/extension-action@^2.3.3":
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/@harlem/extension-action/-/extension-action-2.3.3.tgz#4f426b51458d7ff1b08559ebbf03a7a22ed9036a"
-  integrity sha512-Phpu2uQJcPgM3u8UZzVLBACljWjzbcsJ8gfpKKLmNq8CjSnCwx7CeBGRAVTFZLVdMntBr0nSOfbF/3j78NpOOQ==
-  dependencies:
-    "@harlem/task" "^2.3.3"
-
-"@harlem/plugin-devtools@^2.2.3":
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/@harlem/plugin-devtools/-/plugin-devtools-2.3.3.tgz#25f2db22d697518784087e05957586a4919550b9"
-  integrity sha512-TL5PVua1segRVq9bWfqNFDvFZ92uyzFc6lawvpGDXramF+PGS628fzGLyfLgm0H/bKhvJAGwTPSe06hTA4wXCQ==
-  dependencies:
-    "@harlem/utilities" "^2.3.3"
-    "@vue/devtools-api" "^6.1.4"
-
-"@harlem/plugin-ssr@^2.2.3":
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/@harlem/plugin-ssr/-/plugin-ssr-2.3.3.tgz#5bbfa001e8f6e3479ddde1d0f40860bcc184189a"
-  integrity sha512-hQMApwwNxYcN55vYl6a64dTDmQ72prV0H9f5pgOZ+cnTl0BD3H4A6uxm8N83NXDApHmfbt3d30bsyPbSwsnpaQ==
-  dependencies:
-    "@harlem/utilities" "^2.3.3"
-
-"@harlem/task@^2.3.3":
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/@harlem/task/-/task-2.3.3.tgz#82fec4adb3a9a9d4d49da7b1b774c879f364258a"
-  integrity sha512-BrvCetJBfYNvyWX9Tph4Ctron03zoujahGDwEHB8h0m3/s16LiyVMnMhtl3Ga3+7avSamRBoiDgmTrvuGqPM+A==
-
-"@harlem/utilities@^2.3.3":
-  version "2.3.3"
-  resolved "https://registry.npmjs.org/@harlem/utilities/-/utilities-2.3.3.tgz#349362f959ff6954b68486ef98e9dcacad63d0f6"
-  integrity sha512-Jkh1Us3sskvKqudIGl3V0mcF0ECTS3QPvkekwRJHnBL8UOK4AXGEgsRZG/8zIsNML2S8GfRf8woY91pu/p732A==
-
 "@headlessui/vue@1.4.2":
   version "1.4.2"
   resolved "https://registry.npmjs.org/@headlessui/vue/-/vue-1.4.2.tgz#1098f52cb6c583772708a980b3487222ac0ae65e"
@@ -786,18 +747,6 @@
     vite-node "^0.9.3"
     vite-plugin-checker "^0.4.6"
 
-"@nuxtjs/harlem@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@nuxtjs/harlem/-/harlem-1.0.1.tgz#0b799e2eb0fec76bfdb1fda8bb1f79fe1c10bb0a"
-  integrity sha512-TWDMmFosiXdnS8ZycnF5BSdGiaMfTWqxcZVUFV7dD8gZb4TjP5I7jBFYJxRp1MLQf5yL9QqTOiGGap1B/s8CnQ==
-  dependencies:
-    "@harlem/core" "^2.2.3"
-    "@harlem/plugin-devtools" "^2.2.3"
-    "@harlem/plugin-ssr" "^2.2.3"
-    "@nuxt/kit" "npm:@nuxt/kit-edge@latest"
-    knitwork "^0.1.0"
-    scule "^0.2.1"
-
 "@nuxtjs/tailwindcss@^5.0.2":
   version "5.0.3"
   resolved "https://registry.npmjs.org/@nuxtjs/tailwindcss/-/tailwindcss-5.0.3.tgz#96a8149d3a14f6144ce7d3a52d923bf0a36e5b31"
@@ -915,6 +864,13 @@
   version "1.0.4"
   resolved "https://registry.npmjs.org/@oclif/screen/-/screen-1.0.4.tgz#b740f68609dfae8aa71c3a6cab15d816407ba493"
   integrity sha512-60CHpq+eqnTxLZQ4PGHYNwUX572hgpMHGPtTWMjdTMsAvlm69lZV/4ly6O3sAYkomo4NggGcomrDpBe34rxUqw==
+
+"@pinia/nuxt@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/@pinia/nuxt/-/nuxt-0.1.8.tgz#457a87b0f39ae47a1306e08ab7d4d390b30b48c9"
+  integrity sha512-+M1GH/4XQdooOulPL7aYzli6UE1R5rWJtgcPhx2/97yYRLhKZvuIT33OauUCjYZ+tQVs8lyKfzt6S2agqzcmWg==
+  dependencies:
+    vue-demi "*"
 
 "@rollup/plugin-alias@^3.1.9":
   version "3.1.9"
@@ -4323,7 +4279,7 @@ klona@^2.0.4, klona@^2.0.5:
   resolved "https://registry.npmjs.org/klona/-/klona-2.0.5.tgz#d166574d90076395d9963aa7a928fabb8d76afbc"
   integrity sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==
 
-knitwork@^0.1.0, knitwork@^0.1.1:
+knitwork@^0.1.1:
   version "0.1.1"
   resolved "https://registry.npmjs.org/knitwork/-/knitwork-0.1.1.tgz#8f3d3a14fd5e81b68149c4b69ae4d5e551cfdb72"
   integrity sha512-DxjuhTzCDeXjAcsQuqoZhTFF/wqvaVH2YA7QRhBRpsSeaL44S93hDxyvoluApwk3wjMdia7dc9J0Sj9MHD8rxg==
@@ -5754,6 +5710,14 @@ pify@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha1-7RQaasBDqEnqWISY59yosVMw6Qw=
+
+pinia@^2.0.13:
+  version "2.0.13"
+  resolved "https://registry.npmjs.org/pinia/-/pinia-2.0.13.tgz#6656fc290dae120a9f0cb2f5c520df400d41b8c5"
+  integrity sha512-B7rSqm1xNpwcPMnqns8/gVBfbbi7lWTByzS6aPZ4JOXSJD4Y531rZHDCoYWBwLyHY/8hWnXljgiXp6rRyrofcw==
+  dependencies:
+    "@vue/devtools-api" "^6.1.4"
+    vue-demi "*"
 
 pkg-types@^0.3.2:
   version "0.3.2"
@@ -7566,6 +7530,11 @@ vue-bundle-renderer@^0.3.6:
   integrity sha512-GEz0+vsxF0Cjr7I9EevWlryUP76ZY68O2ludvEo+SunKqB+A2Edu6QKm4voLINqbWh6FZy4rvC2U03RJdSA+5Q==
   dependencies:
     bundle-runner "^0.0.1"
+
+vue-demi@*:
+  version "0.12.5"
+  resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.12.5.tgz#8eeed566a7d86eb090209a11723f887d28aeb2d1"
+  integrity sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==
 
 vue-router@^4.0.14:
   version "4.0.14"

@@ -4,8 +4,8 @@ import { defineNuxtConfig } from "nuxt";
 export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
-    "@nuxtjs/harlem",
-    "./modules/harlemAutoImports",
+    "@pinia/nuxt",
+    "./modules/storesAutoImports",
   ],
   css: ["@/assets/css/main.css", "@/assets/css/fonts.css"],
   build: {

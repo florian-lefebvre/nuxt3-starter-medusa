@@ -1,37 +1,32 @@
-type State = {
-  cartView: boolean;
-  orderSummary: boolean;
-  checkoutStep: number;
-};
+import { defineStore } from "pinia";
 
-const STATE: State = {
-  cartView: false,
-  orderSummary: false,
-  checkoutStep: 1,
-};
+const KEY = "display";
 
-const { state, mutation, ...store } = createStore("display", STATE);
+export const useDisplay = defineStore(KEY, () => {
+    const cartView = ref(false);
+    const orderSummary = ref(false);
+    const checkoutStep = ref(1);
 
-const updateCartViewDisplay = mutation("updateCartViewDisplay", (state) => {
-  state.cartView = !state.cartView;
-});
+    const updateCartViewDisplay = () => {
+        cartView.value = !cartView.value;
+    };
+    const updateOrderSummaryDisplay = () => {
+        orderSummary.value = !orderSummary.value;
+    };
+    const updateCheckoutStep = (step: number) => {
+        checkoutStep.value = step;
+    };
 
-const updateOrderSummaryDisplay = mutation(
-  "updateOrderSummaryDisplay",
-  (state) => {
-    state.orderSummary = !state.orderSummary;
-  }
-);
-
-const updateCheckoutStep = mutation<number>(
-  "updateCheckoutStep",
-  (state, payload) => {
-    state.checkoutStep = payload;
-  }
-);
-
-export const useDisplay = () => ({
-  updateCartViewDisplay,
-  updateOrderSummaryDisplay,
-  updateCheckoutStep,
+    return {
+        state: {
+            cartView: computed(() => cartView),
+            orderSummary: computed(() => orderSummary),
+            checkoutStep: computed(() => checkoutStep),
+        },
+        actions: {
+            updateCartViewDisplay,
+            updateOrderSummaryDisplay,
+            updateCheckoutStep,
+        },
+    };
 });

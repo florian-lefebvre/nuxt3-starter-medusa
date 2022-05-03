@@ -9,17 +9,15 @@
     "start": "SET PORT=8000 && node .output/server/index.mjs"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^5.0.2",
-    "nuxt": "3.0.0-rc.1",
-    "prettier-plugin-tailwindcss": "^0.1.8"
-  },
-  "dependencies": {
-    "@harlem/extension-action": "^2.3.3",
     "@headlessui/vue": "1.4.2",
     "@heroicons/vue": "^1.0.6",
     "@medusajs/medusa": "^1.2.1",
     "@medusajs/medusa-js": "^1.1.1",
     "@nuxt/kit": "3.0.0-rc.1",
-    "@nuxtjs/harlem": "^1.0.1"
+    "@nuxtjs/tailwindcss": "^5.0.2",
+    "@pinia/nuxt": "^0.1.8",
+    "nuxt": "3.0.0-rc.1",
+    "pinia": "^2.0.13",
+    "prettier-plugin-tailwindcss": "^0.1.8"
   }
 }

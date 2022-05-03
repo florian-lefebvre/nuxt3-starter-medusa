@@ -1,112 +1,192 @@
-import actionExtension from "@harlem/extension-action";
+import { defineStore } from "pinia";
 import { Cart, Product, Order, Region } from "@medusajs/medusa";
-import { $medusa } from "~/utils/medusa";
+import { useStoreStorage } from "~/composables/useStoreStorage";
+import { Ref, ComputedRef } from "vue";
 
-type State = {
-  cart: Partial<Cart>;
-  regions: Region[];
-  countryName: string;
+const KEY = "store";
+
+type StateAsRef<T> = {
+    [P in keyof T]: Ref<T[P]>;
 };
 
-const STATE: State = {
-  cart: undefined,
-  regions: [],
-  countryName: "France",
+type StateAsComputed<T> = {
+    [P in keyof T]: ComputedRef<T[P]>;
 };
 
-const { state, getter, mutation, action, ...store } = createStore(
-  "store",
-  STATE,
-  {
-    extensions: [actionExtension()],
-  }
-);
+type Args<T, U> = {
+    state: T;
+    getters?: U extends { [key: string]: (state: StateAsRef<T>) => any }
+        ? U
+        : {};
+    // getters?: {
+    //     [key: string]: (state: StateAsRef<T>) => any;
+    // };
+    actions?: {
+        [key: string]: (state: StateAsRef<T>) => Promise<any> | any;
+    };
+};
 
-const region = getter("region", (state) => state.cart.region);
+const createStore = <T, U>(
+    key: string,
+    args: Args<T, U>
+): (() => {
+    state: StateAsComputed<T>;
+    getters?: {
+        [key: string]: ComputedRef<any>;
+    };
+}) => {
+    const state = args.state;
+    const stateAsRef: StateAsRef<T> = Object.fromEntries(
+        Object.entries(state).map(
+            ([key, value]) => [key, ref(value)] as [keyof T, Ref<T[keyof T]>]
+        )
+    ) as any;
+    const stateAsComputedRef: StateAsComputed<T> = Object.fromEntries(
+        Object.entries(state).map(
+            ([key, value]) =>
+                [key, computed(value)] as [keyof T, ComputedRef<T[keyof T]>]
+        )
+    ) as any;
 
-const currencyCode = getter("currencyCode", () => region.value.currency_code);
+    const getters = Object.fromEntries(
+        Object.entries(args.getters).map(([key, value]) => [
+            key,
+            computed(() => value(stateAsRef)),
+        ])
+    );
 
-const createCart = action("createCart", async (_, mutate) => {
-  const data = await $medusa.carts.create({});
-  mutate(({ cart }) => (cart = data.cart));
+    return () => ({ state: stateAsComputedRef, getters });
+};
+
+const x = createStore("x", {
+    state: {
+        cartView: false,
+    },
+    getters: {
+        isTrue: (state) => state.cartView.value,
+    },
+});
+const {
+    state: { cartView },
+    getters: { isTrue },
+} = x();
+
+export const useStore = defineStore(KEY, () => {
+    const { $medusa } = useNuxtApp();
+
+    const cart = ref<Partial<Cart>>();
+    const countryName = ref<string>("France");
+    const regions = ref<Region[]>([]);
+
+    const storage = useStoreStorage({
+        key: KEY,
+        state: computed(() => ({ cart, countryName, regions })),
+        exclude: ["regions"],
+    });
+
+    const region = computed(() => cart.value.region);
+    const currencyCode = computed(() => region.value.currency_code);
+
+    const createCart = async () => {
+        const data = await $medusa.carts.create({});
+        cart.value = data.cart;
+    };
+
+    const retrieveCart = async () => {
+        if (cart.value === undefined) {
+            return await createCart();
+        }
+
+        const data = await $medusa.carts.retrieve(cart.value.id);
+        cart.value = data.cart;
+    };
+
+    const getRegions = async () => {
+        const { regions: data } = await $medusa.regions.list();
+        regions.value = data;
+    };
+
+    const updateCart = async () => {
+        const data = await $medusa.carts.update(cart.value.id, cart.value);
+        cart.value = data.cart;
+    };
+
+    const setRegion = async ({
+        region: r,
+        countryName: c,
+    }: {
+        region: Region;
+        countryName: string;
+    }) => {
+        cart.value.region = r;
+        countryName.value = c;
+    };
+
+    const initialize = async () => {
+        storage.init();
+        await retrieveCart();
+        await getRegions();
+        // watch([cart], async () => {
+        // await updateCart();
+        // });
+    };
+
+    return {
+        state: {
+            cart: computed(() => cart),
+            countryName: computed(() => countryName),
+            regions: computed(() => regions),
+            region: computed(() => region),
+            currencyCode: computed(() => currencyCode),
+        },
+        actions: {
+            createCart,
+            retrieveCart,
+            getRegions,
+            setRegion,
+            initialize,
+        },
+        // order,
+        // products,
+        // adding,
+        // addVariantToCart,
+        // removeLineItem,
+        // updateLineItem,
+        // getShippingOptions,
+        // setShippingMethod,
+        // updateAddress,
+        // createPaymentSession,
+        // completeCart,
+        // retrieveOrder,
+        // setPaymentSession,
+    };
 });
 
-const retrieveCart = action("retrieveCart", async (_, mutate) => {
-  if (state.cart?.id === undefined) {
-    return await createCart();
-  }
-  const data = await $medusa.carts.retrieve(state.cart.id);
-  mutate(({ cart }) => (cart = data.cart));
-});
+// const order = ref<Partial<Order>>({});
+// const products = ref<Product[]>([]);
 
-const updateCart = action("updateCart", async (_, mutate) => {
-  // TODO: add all needed fields
-  const data = await $medusa.carts.update(state.cart.id, {
-    region_id: state.cart.region_id,
-  });
-  mutate(({ cart }) => (cart = data.cart));
-});
-
-const setRegions = mutation<Region[]>("setRegions", (state, payload) => {
-  state.regions = payload;
-});
-
-const getRegions = action("getRegions", async (_, mutate) => {
-  const { regions: data } = await $medusa.regions.list();
-  mutate((state) => Object.assign(state.regions, data));
-});
-
-const setRegion = mutation<{
-  region: Region;
-  countryName: string;
-}>("setRegion", (state, { region, countryName }) => {
-  state.cart.region = region;
-  state.countryName = countryName;
-});
-
-const init = action("init", async () => {
-  await retrieveCart();
-  await getRegions();
-  watch([state.cart], async () => {
-    await updateCart();
-  });
-});
-
-// const addVariantToCart = action<{ variantId: string; quantity: number }>(
-//   "addVariantToCart",
-//   async ({ variantId, quantity }, mutate) => {
-//     const data = await $medusa.carts.lineItems.create(state.cart.id, {
-//       variant_id: variantId,
-//       quantity,
-//     });
-//     mutate(({ cart }) => (cart = data.cart));
+// watch([adding, cart, order], async () => {
+//   if (initialized.value) {
+//     await retrieveCart();
 //   }
-// );
 
-export const useStore = () => ({
-  state,
-  region,
-  currencyCode,
-  createCart,
-  retrieveCart,
-  updateCart,
-  getRegions,
-  setRegion,
-  init,
-  // addVariantToCart,
-  // adding,
-  // order,
-  // products,
-  // removeLineItem,
-  // updateLineItem,
-  // getShippingOptions,
-  // setShippingMethod,
-  // updateAddress,
-  // createPaymentSession,
-  // completeCart,
-  // retrieveOrder,
-  // setPaymentSession,
-});
+//   const data = await client.products.list();
+//   products.value = data.products;
+// });
+
+// const addVariantToCart = async ({
+//   variantId,
+//   quantity,
+// }: {
+//   variantId: string;
+//   quantity: number;
+// }) => {
+//   const data = await client.carts.lineItems.create(cart.value.id, {
+//     variant_id: variantId,
+//     quantity,
+//   });
+//   cart.value = data.cart;
+// };
 
 // const removeLineItem = async (lineId: string) => {
 //   const data = await client.carts.lineItems.delete(cart.value.id, lineId);

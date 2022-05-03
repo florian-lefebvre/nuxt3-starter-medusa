@@ -1,24 +1,15 @@
 <template>
-  <Menu>
-    <MenuButton>More</MenuButton>
-    <MenuItems>
-      <MenuItem v-slot="{ active }">
-        <a :class="{ 'bg-blue-500': active }" href="/account-settings">
-          Account settings
-        </a>
-      </MenuItem>
-      <MenuItem v-slot="{ active }">
-        <a :class="{ 'bg-blue-500': active }" href="/account-settings">
-          Documentation
-        </a>
-      </MenuItem>
-      <MenuItem disabled>
-        <span class="opacity-75">Invite a friend (coming soon!)</span>
-      </MenuItem>
-    </MenuItems>
-  </Menu>
+    <div>
+        <div>FAQ</div>
+        <div>{{ cartView }}</div>
+        <button @click="updateCartViewDisplay()">UPDATE</button>
+    </div>
 </template>
++
 
-<script setup>
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
+<script setup lang="ts">
+const {
+    actions: { updateCartViewDisplay },
+    state: { cartView },
+} = useDisplay();
 </script>
