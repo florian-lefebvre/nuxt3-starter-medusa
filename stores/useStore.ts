@@ -5,7 +5,7 @@ import { Ref, ComputedRef } from "vue";
 
 const KEY = "store";
 
-export const useStore = defineStore(KEY, () => {
+const store = defineStore(KEY, () => {
     const { $medusa } = useNuxtApp();
 
     const cart = ref<Partial<Cart>>();
@@ -91,6 +91,12 @@ export const useStore = defineStore(KEY, () => {
         // setPaymentSession,
     };
 });
+
+export const useStore = () => {
+    const _store = store();
+    const refs = storeToRefs(_store);
+    return { ..._store, ...refs };
+};
 
 // const order = ref<Partial<Order>>({});
 // const products = ref<Product[]>([]);
