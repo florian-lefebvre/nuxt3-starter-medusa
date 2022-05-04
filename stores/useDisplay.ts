@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 const KEY = "display";
 
-const store = defineStore(KEY, () => {
+export const useDisplay = defineStore(KEY, () => {
     const cartView = ref(false);
     const orderSummary = ref(false);
     const checkoutStep = ref(1);
@@ -26,9 +26,3 @@ const store = defineStore(KEY, () => {
         updateCheckoutStep,
     };
 });
-
-export const useDisplay = () => {
-    const _store = store();
-    const refs = storeToRefs(_store);
-    return { ..._store, ...refs };
-};

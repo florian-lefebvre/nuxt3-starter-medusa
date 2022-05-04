@@ -8,5 +8,7 @@
 +
 
 <script setup lang="ts">
-const { updateCartViewDisplay, cartView } = useDisplay();
+const display = useDisplay();
+const { cartView } = storeToRefs(display);
+const { updateCartViewDisplay } = display;
 </script>

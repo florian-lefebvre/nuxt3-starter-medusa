@@ -135,7 +135,9 @@ import {
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { Country, Region } from "@medusajs/medusa";
 
-const { cart, countryName, regions, currencyCode, setRegion } = useStore();
+const store = useStore();
+const { cart, countryName, regions, currencyCode } = storeToRefs(store);
+const { setRegion } = store;
 
 const countries = computed(() => {
     const _countries: {
