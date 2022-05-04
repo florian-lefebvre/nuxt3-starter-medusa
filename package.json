@@ -18,8 +18,9 @@
         "@nuxt/kit": "3.0.0-rc.1",
         "@nuxtjs/tailwindcss": "^5.0.2",
         "@pinia/nuxt": "^0.1.8",
-        "nuxt": "3.0.0-rc.1",
+        "nuxt": "3.0.0-rc.2",
         "pinia": "^2.0.13",
+        "postcss-custom-properties": "^12.1.7",
         "prettier": "^2.6.2",
         "prettier-plugin-tailwindcss": "^0.1.10"
     }
