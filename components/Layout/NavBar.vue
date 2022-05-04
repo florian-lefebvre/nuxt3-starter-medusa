@@ -4,12 +4,12 @@
             <Menu as="div" class="relative inline-block text-left">
                 <div>
                     <MenuButton
-                        class="text-white transition-colors hover:text-violet-10 inline-flex items-center space-x-1"
+                        class="text-white transition-colors hover:text-violet-10 inline-flex items-center space-x-2"
                     >
-                        <span
-                            >{{ countryName }} /
-                            {{ currencyCode.toUpperCase() }}</span
-                        >
+                        <span>{{ countryName }}</span>
+                        <span class="text-xs text-violet-10">
+                            {{ currencyCode.toUpperCase() }}
+                        </span>
                         <ChevronDownIcon class="w-4 h-4" aria-hidden="true" />
                     </MenuButton>
                 </div>
@@ -23,7 +23,7 @@
                     leave-to-class="transform opacity-0 scale-95"
                 >
                     <MenuItems
-                        class="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
+                        class="z-40 origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                     >
                         <div class="py-1">
                             <MenuItem
@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    <div class="sticky top-0 px-4 bg-white border-b border-b-grey-30">
+    <div class="z-30 sticky top-0 px-4 bg-white border-b border-b-grey-30">
         <div
             class="relative flex items-center justify-center max-w-6xl mx-auto h-14"
         >
