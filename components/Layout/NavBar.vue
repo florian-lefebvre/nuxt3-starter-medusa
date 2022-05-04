@@ -1,16 +1,16 @@
 <template>
-    <div class="py-2 px-4 bg-violet-50">
-        <div class="flex justify-between max-w-6xl mx-auto relative">
+    <div class="bg-violet-50 py-2 px-4">
+        <div class="relative mx-auto flex max-w-6xl justify-between">
             <Menu as="div" class="relative inline-block text-left">
                 <div>
                     <MenuButton
-                        class="text-white transition-colors hover:text-violet-10 inline-flex items-center space-x-2"
+                        class="inline-flex items-center space-x-2 text-white transition-colors hover:text-violet-10"
                     >
                         <span>{{ countryName }}</span>
                         <span class="text-xs text-violet-10">
                             {{ currencyCode.toUpperCase() }}
                         </span>
-                        <ChevronDownIcon class="w-4 h-4" aria-hidden="true" />
+                        <ChevronDownIcon class="h-4 w-4" aria-hidden="true" />
                     </MenuButton>
                 </div>
 
@@ -23,7 +23,7 @@
                     leave-to-class="transform opacity-0 scale-95"
                 >
                     <MenuItems
-                        class="z-40 origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        class="absolute left-0 z-40 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     >
                         <div class="py-1">
                             <MenuItem
@@ -42,10 +42,10 @@
                                             ? 'bg-gray-100 text-grey-90'
                                             : 'text-grey-70',
                                         e.country.display_name === countryName
-                                            ? 'bg-violet-10 text-violet-90 font-medium'
+                                            ? 'bg-violet-10 font-medium text-violet-90'
                                             : '',
                                     ]"
-                                    class="px-4 py-2 text-sm flex space-x-2 items-center w-full"
+                                    class="flex w-full items-center space-x-2 px-4 py-2 text-sm"
                                 >
                                     <div>
                                         {{ e.country.display_name }}
@@ -84,39 +84,39 @@
             </div>
         </div>
     </div>
-    <div class="z-30 sticky top-0 px-4 bg-white border-b border-b-grey-30">
+    <div class="sticky top-0 z-30 border-b border-b-grey-30 bg-white px-4">
         <div
-            class="relative flex items-center justify-center max-w-6xl mx-auto h-14"
+            class="relative mx-auto flex h-14 max-w-6xl items-center justify-center"
         >
-            <NuxtLink to="/" class="absolute right-auto inset-y-3 inset-x-0">
+            <NuxtLink to="/" class="absolute inset-y-3 inset-x-0 right-auto">
                 <img src="/medusa-logo.svg" class="h-full" />
             </NuxtLink>
-            <div class="flex space-x-6 items-center">
+            <div class="flex items-center space-x-6">
                 <NuxtLink
                     to="/products"
-                    class="border-b-2 hover:border-violet-50 border-transparent font-medium transition-colors text-grey-60 hover:text-violet-50 h-full py-4"
+                    class="h-full border-b-2 border-transparent py-4 font-medium text-grey-60 transition-colors hover:border-violet-50 hover:text-violet-50"
                 >
                     <div>Products</div>
                 </NuxtLink>
                 <NuxtLink
                     to="/collections"
-                    class="border-b-2 hover:border-violet-50 border-transparent font-medium transition-colors text-grey-60 hover:text-violet-50 h-full py-4"
+                    class="h-full border-b-2 border-transparent py-4 font-medium text-grey-60 transition-colors hover:border-violet-50 hover:text-violet-50"
                     >Collections</NuxtLink
                 >
             </div>
             <div
-                class="absolute left-auto flex items-center space-x-6 inset-0 h-14"
+                class="absolute inset-0 left-auto flex h-14 items-center space-x-6"
             >
                 <button
-                    class="border-b-2 border-transparent transition-colors text-grey-40 hover:text-grey-50 h-full py-4"
+                    class="h-full border-b-2 border-transparent py-4 text-grey-40 transition-colors hover:text-grey-50"
                 >
                     <SearchIcon class="h-full" />
                 </button>
                 <button
-                    class="border-b-2 border-transparent font-medium transition-colors text-grey-40 hover:text-grey-50 h-full py-4 flex items-end space-x-1"
+                    class="flex h-full items-end space-x-1 border-b-2 border-transparent py-4 font-medium text-grey-40 transition-colors hover:text-grey-50"
                 >
                     <ShoppingBagIcon class="h-full" />
-                    <span class="leading-none text-xl">{{
+                    <span class="text-xl leading-none">{{
                         cart.items.length
                     }}</span>
                 </button>

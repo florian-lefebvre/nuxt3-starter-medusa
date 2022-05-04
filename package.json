@@ -1,23 +1,26 @@
 {
-  "name": "nuxt3-starter-medusa",
-  "version": "0.1.0",
-  "author": "Florian LEFEBVRE <contact@florian-lefebvre.dev> (https://florian-lefebvre.dev)",
-  "private": true,
-  "scripts": {
-    "dev": "nuxi dev --port 8000",
-    "build": "nuxi build",
-    "start": "SET PORT=8000 && node .output/server/index.mjs"
-  },
-  "devDependencies": {
-    "@headlessui/vue": "1.4.2",
-    "@heroicons/vue": "^1.0.6",
-    "@medusajs/medusa": "^1.2.1",
-    "@medusajs/medusa-js": "^1.1.1",
-    "@nuxt/kit": "3.0.0-rc.1",
-    "@nuxtjs/tailwindcss": "^5.0.2",
-    "@pinia/nuxt": "^0.1.8",
-    "nuxt": "3.0.0-rc.1",
-    "pinia": "^2.0.13",
-    "prettier-plugin-tailwindcss": "^0.1.8"
-  }
+    "name": "nuxt3-starter-medusa",
+    "version": "0.1.0",
+    "author": "Florian LEFEBVRE <contact@florian-lefebvre.dev> (https://florian-lefebvre.dev)",
+    "private": true,
+    "scripts": {
+        "dev": "nuxi dev --port 8000",
+        "build": "nuxi build",
+        "start": "SET PORT=8000 && node .output/server/index.mjs",
+        "preview": "SET PORT=8000 && nuxi preview",
+        "order-classes": "prettier --write ."
+    },
+    "devDependencies": {
+        "@headlessui/vue": "1.4.2",
+        "@heroicons/vue": "^1.0.6",
+        "@medusajs/medusa": "^1.2.1",
+        "@medusajs/medusa-js": "^1.1.1",
+        "@nuxt/kit": "3.0.0-rc.1",
+        "@nuxtjs/tailwindcss": "^5.0.2",
+        "@pinia/nuxt": "^0.1.8",
+        "nuxt": "3.0.0-rc.1",
+        "pinia": "^2.0.13",
+        "prettier": "^2.6.2",
+        "prettier-plugin-tailwindcss": "^0.1.10"
+    }
 }
