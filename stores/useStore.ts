@@ -10,7 +10,6 @@ export const useStore = defineStore(KEY, () => {
     const cart = ref<Partial<Cart>>();
     const countryName = ref<string>("France");
     const regions = ref<Region[]>([]);
-    const products = ref<Product[]>([]);
 
     const storage = useStoreStorage({
         key: KEY,
@@ -59,23 +58,16 @@ export const useStore = defineStore(KEY, () => {
         countryName.value = c;
     };
 
-    const getProducts = async () => {
-        const data = await $medusa.products.list();
-        products.value = data.products;
-    };
-
     const initialize = async () => {
         storage.init();
         await retrieveCart();
         await getRegions();
-        await getProducts();
     };
 
     return {
         cart,
         countryName,
         regions,
-        products,
         region,
         currencyCode,
         createCart,
@@ -83,7 +75,6 @@ export const useStore = defineStore(KEY, () => {
         updateCart,
         getRegions,
         setRegion,
-        getProducts,
         initialize,
         // order,
         // products,
