@@ -1,3 +1,5 @@
+import { Product } from "@medusajs/medusa";
+
 export default function () {
     const quantity = (item): number => {
         return item.quantity;
@@ -30,6 +32,30 @@ export default function () {
         [Object, Array].includes((obj || {}).constructor) &&
         !Object.entries(obj || {}).length;
 
+    const productPrices = (product: object, currencyCode: string) => {
+        let prices: number[] = [];
+        for (const variant of (product as Product).variants) {
+            prices.push(
+                variant.prices.find(
+                    (price) => price.currency_code === currencyCode
+                ).amount
+            );
+        }
+        prices = [...new Set(prices)];
+        const max = Math.max(...prices);
+        const min = Math.min(...prices);
+        return { max, min };
+    };
+
+    const priceToFloat = (price: number): number => {
+        const str = price.toString();
+        const length = str.length;
+        const float = parseFloat(
+            str.substring(0, length - 2) + "." + str.substring(length - 2)
+        );
+        return float;
+    };
+
     return {
         quantity,
         sum,
@@ -37,5 +63,7 @@ export default function () {
         getSlug,
         resetOptions,
         isEmpty,
+        productPrices,
+        priceToFloat,
     };
 }

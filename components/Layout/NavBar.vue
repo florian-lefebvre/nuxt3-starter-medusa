@@ -28,11 +28,11 @@
                         <div class="py-1">
                             <MenuItem
                                 v-slot="{ active }"
-                                v-for="e in countries"
+                                v-for="country in countries"
                                 @click.native="
                                     setRegion({
-                                        countryName: e.country.display_name,
-                                        region: e.region,
+                                        countryName: country.display_name,
+                                        regionId: country.region_id,
                                     })
                                 "
                             >
@@ -41,26 +41,25 @@
                                         active
                                             ? 'bg-gray-100 text-grey-90'
                                             : 'text-grey-70',
-                                        e.country.display_name === countryName
+                                        country.display_name === countryName
                                             ? 'bg-violet-10 font-medium text-violet-90'
                                             : '',
                                     ]"
                                     class="flex w-full items-center space-x-2 px-4 py-2 text-sm"
                                 >
                                     <div>
-                                        {{ e.country.display_name }}
+                                        {{ country.display_name }}
                                     </div>
                                     <div
                                         :class="[
-                                            e.country.display_name ===
-                                            countryName
+                                            country.display_name === countryName
                                                 ? 'text-violet-60'
                                                 : 'text-grey-60',
                                         ]"
                                         class="text-xs font-normal"
                                     >
                                         {{
-                                            e.region.currency_code.toUpperCase()
+                                            country.currency_code.toUpperCase()
                                         }}
                                     </div>
                                 </button>
@@ -140,13 +139,15 @@ const { cart, countryName, regions, currencyCode } = storeToRefs(store);
 const { setRegion } = store;
 
 const countries = computed(() => {
-    const _countries: {
-        country: Country;
-        region: Region;
-    }[] = [];
+    const _countries: (Country & {
+        currency_code: string;
+    })[] = [];
     for (const region of regions.value as Region[]) {
-        for (const country of region.countries as Country[]) {
-            _countries.push({ country, region });
+        for (const country of region.countries) {
+            _countries.push({
+                ...country,
+                currency_code: region.currency_code,
+            });
         }
     }
     return _countries;

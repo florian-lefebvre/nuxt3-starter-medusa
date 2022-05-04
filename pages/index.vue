@@ -32,19 +32,26 @@
             </div>
             <div class="mt-10 grid grid-cols-4 gap-4">
                 <NuxtLink
-                    :to="`/products/${product}`"
-                    v-for="product in [0, 1, 2, 3]"
-                    class="rounded-lg p-0 transition-all hover:bg-grey-10 hover:p-4"
+                    :to="`/products/${product.handle}`"
+                    v-for="product in products.slice(0, 4)"
+                    class="rounded-lg p-0 transition-all hover:p-4"
                 >
                     <img
-                        :src="`https://picsum.photos/id/${product}/500/500`"
-                        :alt="product.toString()"
+                        :src="product.thumbnail"
+                        :alt="product.title"
                         class="mb-4 rounded-lg"
                     />
                     <div class="text-center">
-                        <div>[COLLECTION]</div>
-                        <div>[NAME] #{{ product }}</div>
-                        <div>[COLORS]</div>
+                        <div>{{ product.title }}</div>
+                        <div>
+                            From
+                            {{
+                                priceToFloat(
+                                    productPrices(product, currencyCode).min
+                                )
+                            }}
+                            {{ currencyCode.toUpperCase }}
+                        </div>
                     </div>
                 </NuxtLink>
             </div>
@@ -62,4 +69,9 @@
 
 <script setup lang="ts">
 import { ArrowRightIcon } from "@heroicons/vue/solid";
+
+const store = useStore();
+const { products, currencyCode } = storeToRefs(store);
+
+const { productPrices, priceToFloat } = useHelpers();
 </script>

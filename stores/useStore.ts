@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
-import { Cart, Product, Order, Region } from "@medusajs/medusa";
+import { Cart, Product, Region } from "@medusajs/medusa";
 import { useStoreStorage } from "~/composables/useStoreStorage";
-import { Ref, ComputedRef } from "vue";
 
 const KEY = "store";
 
@@ -11,10 +10,11 @@ export const useStore = defineStore(KEY, () => {
     const cart = ref<Partial<Cart>>();
     const countryName = ref<string>("France");
     const regions = ref<Region[]>([]);
+    const products = ref<Product[]>([]);
 
     const storage = useStoreStorage({
         key: KEY,
-        state: computed(() => ({ cart, countryName, regions })),
+        state: { cart, countryName, regions },
         exclude: ["regions"],
     });
 
@@ -40,41 +40,50 @@ export const useStore = defineStore(KEY, () => {
         regions.value = data;
     };
 
-    const updateCart = async () => {
-        const data = await $medusa.carts.update(cart.value.id, cart.value);
+    const updateCart = async ({ regionId }: { regionId?: string }) => {
+        console.log("update cart");
+        const data = await $medusa.carts.update(cart.value.id, {
+            region_id: regionId,
+        });
         cart.value = data.cart;
     };
 
     const setRegion = async ({
-        region: r,
+        regionId: r,
         countryName: c,
     }: {
-        region: Region;
+        regionId: string;
         countryName: string;
     }) => {
-        cart.value.region = r;
+        await updateCart({ regionId: r });
         countryName.value = c;
+    };
+
+    const getProducts = async () => {
+        const data = await $medusa.products.list();
+        products.value = data.products;
     };
 
     const initialize = async () => {
         storage.init();
         await retrieveCart();
         await getRegions();
-        // watch([cart], async () => {
-        // await updateCart();
-        // });
+        await getProducts();
     };
 
     return {
         cart,
         countryName,
         regions,
+        products,
         region,
         currencyCode,
         createCart,
         retrieveCart,
+        updateCart,
         getRegions,
         setRegion,
+        getProducts,
         initialize,
         // order,
         // products,
