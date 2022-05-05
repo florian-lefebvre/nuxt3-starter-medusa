@@ -8,9 +8,9 @@
 +
 
 <script setup lang="ts">
-import { useDisplayRefs } from "~/types/stores";
+import { UseDisplayRefs } from "~/types/stores";
 
 const display = useDisplay();
-const { cartView }: useDisplayRefs = storeToRefs(display);
+const { cartView }: UseDisplayRefs = storeToRefs(display);
 const { updateCartViewDisplay } = display;
 </script>

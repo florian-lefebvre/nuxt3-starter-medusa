@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { Cart, Product, Region } from "@medusajs/medusa";
+import { Cart, Region } from "@medusajs/medusa";
 import { useStoreStorage } from "~/composables/useStoreStorage";
 
 const KEY = "store";
@@ -19,6 +19,7 @@ export const useStore = defineStore(KEY, () => {
 
     const region = computed(() => cart.value.region);
     const currencyCode = computed(() => region.value.currency_code);
+    const taxRate = computed(() => region.value.tax_rate / 100);
 
     const createCart = async () => {
         const data = await $medusa.carts.create({});
@@ -70,6 +71,7 @@ export const useStore = defineStore(KEY, () => {
         regions,
         region,
         currencyCode,
+        taxRate,
         createCart,
         retrieveCart,
         updateCart,

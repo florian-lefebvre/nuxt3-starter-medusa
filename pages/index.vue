@@ -32,31 +32,10 @@
                     </NuxtLink>
                 </div>
                 <div class="mt-10 grid grid-cols-4 gap-4">
-                    <NuxtLink
-                        :to="`/products/${product.handle}`"
+                    <ProductCard
                         v-for="product in products"
-                        class="transition-all hover:scale-95"
-                    >
-                        <img
-                            :src="product.thumbnail"
-                            :alt="product.title"
-                            class="rounded-2xl"
-                        />
-                        <div class="p-4 text-center">
-                            <div class="text-xl font-medium">
-                                {{ product.title }}
-                            </div>
-                            <div class="text-sm text-grey-70">
-                                From
-                                {{
-                                    priceToFloat(
-                                        productPrices(product, currencyCode).min
-                                    )
-                                }}
-                                {{ currencyCode.toUpperCase() }}
-                            </div>
-                        </div>
-                    </NuxtLink>
+                        :product="product"
+                    />
                 </div>
             </div>
         </div>
@@ -104,14 +83,8 @@
 
 <script setup lang="ts">
 import { ArrowRightIcon } from "@heroicons/vue/solid";
-import { useStoreRefs } from "~/types/stores";
 
 const { $medusa } = useNuxtApp();
-
-const store = useStore();
-const { currencyCode }: useStoreRefs = storeToRefs(store) as any;
-
-const { productPrices, priceToFloat } = useHelpers();
 
 const { data: products } = useAsyncData("products", async () => {
     const data = await $medusa.products.list({ limit: 4 });
