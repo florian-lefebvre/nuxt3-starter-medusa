@@ -34,12 +34,12 @@
                 <NuxtLink
                     :to="`/products/${product.handle}`"
                     v-for="product in products"
-                    class="group"
+                    class="transition-all hover:scale-95"
                 >
                     <img
                         :src="product.thumbnail"
                         :alt="product.title"
-                        class="mb-4 rounded-lg p-0 transition-all group-hover:rounded-2xl group-hover:p-4"
+                        class="rounded-2xl"
                     />
                     <div class="p-4 text-center">
                         <div class="text-xl font-medium">
@@ -88,7 +88,7 @@
                                 {{ collection.title }}
                             </div>
                             <div class="text-sm text-violet-40">
-                                Short description
+                                {{ collection.metadata.description }}
                             </div>
                         </div>
                     </div>

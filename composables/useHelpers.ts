@@ -32,9 +32,9 @@ export default function () {
         [Object, Array].includes((obj || {}).constructor) &&
         !Object.entries(obj || {}).length;
 
-    const productPrices = (product: object, currencyCode: string) => {
+    const productPrices = (product: Product, currencyCode: string) => {
         let prices: number[] = [];
-        for (const variant of (product as Product).variants) {
+        for (const variant of product.variants) {
             prices.push(
                 variant.prices.find(
                     (price) => price.currency_code === currencyCode
