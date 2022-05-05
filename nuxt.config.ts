@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     modules: [
         "@nuxtjs/tailwindcss",
         "@pinia/nuxt",
+        "@vueuse/nuxt",
         "./modules/storesAutoImports",
     ],
     css: ["@/assets/css/main.css", "@/assets/css/fonts.css"],

@@ -5,6 +5,7 @@ export type UseStoreRefs = {
     cart: Ref<Partial<Cart>>;
     countryName: Ref<string>;
     regions: Ref<Region[]>;
+    region: Ref<Region>;
     currencyCode: Ref<string>;
     taxRate: Ref<number>;
 };
