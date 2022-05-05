@@ -31,12 +31,12 @@
                         <ArrowRightIcon class="h-4 w-4" />
                     </NuxtLink>
                 </div>
-                <div class="mt-10 grid grid-cols-4 gap-4">
+                <ProductGrid>
                     <ProductCard
                         v-for="product in products"
                         :product="product"
                     />
-                </div>
+                </ProductGrid>
             </div>
         </div>
         <div class="py-20 px-4">
@@ -87,12 +87,12 @@ import { ArrowRightIcon } from "@heroicons/vue/solid";
 const { $medusa } = useNuxtApp();
 
 const { data: products } = useAsyncData("products", async () => {
-    const data = await $medusa.products.list({ limit: 4 });
-    return data.products;
+    const { products } = await $medusa.products.list({ limit: 4 });
+    return products;
 });
 
 const { data: collections } = useAsyncData("collections", async () => {
-    const data = await $medusa.collections.list({ limit: 3 });
-    return data.collections;
+    const { collections } = await $medusa.collections.list({ limit: 3 });
+    return collections;
 });
 </script>
