@@ -100,11 +100,12 @@
 
 <script setup lang="ts">
 import { ArrowRightIcon } from "@heroicons/vue/solid";
+import { useStoreRefs } from "~/types/stores";
 
 const { $medusa } = useNuxtApp();
 
 const store = useStore();
-const { currencyCode } = storeToRefs(store);
+const { currencyCode }: useStoreRefs = storeToRefs(store) as any;
 
 const { productPrices, priceToFloat } = useHelpers();
 

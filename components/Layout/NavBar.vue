@@ -133,9 +133,12 @@ import {
 } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { Country, Region } from "@medusajs/medusa";
+import { useStoreRefs } from "~/types/stores";
 
 const store = useStore();
-const { cart, countryName, regions, currencyCode } = storeToRefs(store);
+const { cart, countryName, regions, currencyCode }: useStoreRefs = storeToRefs(
+    store
+) as any;
 const { setRegion } = store;
 
 const countries = computed(() => {
