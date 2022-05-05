@@ -1,18 +1,25 @@
 <template>
     <NuxtLink
         :to="`/products/${product.handle}`"
-        class="transition-all hover:scale-95"
+        class="rounded-2xl transition-all hover:scale-95 focus:ring focus:ring-violet-50"
     >
         <img
             :src="product.thumbnail"
             :alt="product.title"
             class="rounded-2xl"
         />
-        <div class="p-4 text-center">
+        <div class="p-4 text-left">
             <div class="text-xl font-medium">
                 {{ product.title }}
             </div>
-            <div class="text-sm text-grey-70">From {{ price }}</div>
+            <ClientOnly>
+                <div class="text-sm">
+                    <span class="text-grey-70">From </span>
+                    <span class="font-semibold text-violet-50">{{
+                        price
+                    }}</span>
+                </div>
+            </ClientOnly>
         </div>
     </NuxtLink>
 </template>

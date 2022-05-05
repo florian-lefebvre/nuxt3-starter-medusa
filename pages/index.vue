@@ -25,7 +25,7 @@
                     <h2 class="text-4xl font-bold">A few products</h2>
                     <NuxtLink
                         to="/products"
-                        class="inline-flex items-center space-x-2 rounded-md bg-violet-5 px-6 py-2 font-medium text-violet-60 transition-colors hover:bg-violet-10"
+                        class="inline-flex items-center space-x-2 rounded-md bg-violet-5 px-6 py-2 font-medium text-violet-60 transition-all hover:bg-violet-10 focus:ring focus:ring-violet-50"
                     >
                         <div>Browse all</div>
                         <ArrowRightIcon class="h-4 w-4" />
@@ -45,7 +45,7 @@
                     <h2 class="text-4xl font-bold">Our collections</h2>
                     <NuxtLink
                         to="/collections"
-                        class="inline-flex items-center space-x-2 rounded-md bg-violet-5 px-6 py-2 font-medium text-violet-60 transition-colors hover:bg-violet-10"
+                        class="inline-flex items-center space-x-2 rounded-md bg-violet-5 px-6 py-2 font-medium text-violet-60 transition-all hover:bg-violet-10 focus:ring focus:ring-violet-50"
                     >
                         <div>Browse all</div>
                         <ArrowRightIcon class="h-4 w-4" />

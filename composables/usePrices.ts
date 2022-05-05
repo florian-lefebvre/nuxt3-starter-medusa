@@ -1,5 +1,6 @@
 import { UseStoreRefs } from "~/types/stores";
 import { Product, ProductVariant } from "@medusajs/medusa";
+import defaults from "~/utils/defaults";
 
 export default function () {
     const store = useStore();
@@ -11,12 +12,15 @@ export default function () {
         digits: number,
         taxRate: number = 0
     ) => {
-        const iso = computed(
-            () =>
-                region.value.countries.find(
-                    (country) => country.display_name === countryName.value
-                ).iso_2
-        );
+        const iso = computed(() => {
+            const country = region.value.countries.find(
+                (country) => country.display_name === countryName.value
+            );
+            if (!country) {
+                return defaults.iso;
+            }
+            return country.iso_3;
+        });
 
         return computed(() =>
             new Intl.NumberFormat(iso.value, {
@@ -37,12 +41,13 @@ export default function () {
         return computed(() => (moneyAmount.amount * (1 + taxRate.value)) / 100);
     };
 
-    const formatPrice = (variant: ProductVariant, digits: number = 2) => {
-        if (variant.prices.length === 0) {
-            return ref("No prices");
-        }
-        return formatMoneyAmount(getVariantPrice(variant).value, digits);
-    };
+    const formatPrice = (variant: ProductVariant, digits: number = 2) =>
+        computed(() =>
+            variant.prices.length === 0
+                ? "No price"
+                : formatMoneyAmount(getVariantPrice(variant).value, digits)
+                      .value
+        );
 
     const getProductExtremeVariants = (product: Product) => {
         const variants = product.variants;

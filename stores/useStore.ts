@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { Cart, Region } from "@medusajs/medusa";
 import { useStoreStorage } from "~/composables/useStoreStorage";
+import defaults from "~/utils/defaults";
 
 const KEY = "store";
 
@@ -8,7 +9,7 @@ export const useStore = defineStore(KEY, () => {
     const { $medusa } = useNuxtApp();
 
     const cart = ref<Partial<Cart>>();
-    const countryName = ref<string>("France");
+    const countryName = ref<string>(defaults.country);
     const regions = ref<Region[]>([]);
 
     const storage = useStoreStorage({
@@ -41,7 +42,6 @@ export const useStore = defineStore(KEY, () => {
     };
 
     const updateCart = async ({ regionId }: { regionId?: string }) => {
-        console.log("update cart");
         const data = await $medusa.carts.update(cart.value.id, {
             region_id: regionId,
         });
