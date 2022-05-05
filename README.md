@@ -19,3 +19,4 @@
 -   [ ] /faq
 -   [ ] /terms-and-conditions
 -   [ ] /privacy-policy
+-   [ ] /contact
