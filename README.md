@@ -4,7 +4,7 @@
 
 ### Routes
 
--   [ ] /
+-   [x] /
 -   [ ] /products
 -   [ ] /products/[slug]
 -   [ ] /collections
