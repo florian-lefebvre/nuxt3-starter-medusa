@@ -1,5 +1,11 @@
 # Medusa Nuxt 3 Starter
 
+## Requirements
+
+Backend server:
+
+-   **@medusajs/medusa**: `^1.3.0`
+
 ## Roadmap
 
 ### Routes

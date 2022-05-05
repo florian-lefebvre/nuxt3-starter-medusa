@@ -86,7 +86,7 @@ import { ArrowRightIcon } from "@heroicons/vue/solid";
 
 const { $medusa } = useNuxtApp();
 
-const { data: products } = useAsyncData("products", async () => {
+const { data: products } = useAsyncData("products-overview", async () => {
     const { products } = await $medusa.products.list({ limit: 4 });
     return products;
 });
