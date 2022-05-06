@@ -73,7 +73,23 @@
                                 </DisclosurePanel>
                             </transition>
                         </Disclosure>
-                        <div v-if="activeFilters.length > 0">Reset</div>
+                        <transition
+                            enter-active-class="transition duration-100 ease-out"
+                            enter-from-class="transform scale-95 opacity-0"
+                            enter-to-class="transform scale-100 opacity-100"
+                            leave-active-class="transition duration-75 ease-out"
+                            leave-from-class="transform scale-100 opacity-100"
+                            leave-to-class="transform scale-95 opacity-0"
+                        >
+                            <button
+                                v-if="activeFilters.length > 0"
+                                @click="resetFilters()"
+                                class="flex w-full items-center justify-center space-x-2 rounded-md bg-violet-5 px-6 py-2 font-medium text-violet-60 transition-all hover:bg-violet-10 focus:ring focus:ring-violet-50"
+                            >
+                                <div>Reset filters</div>
+                                <XIcon class="h-4 w-4" />
+                            </button>
+                        </transition>
                     </div>
                 </div>
                 <div>
@@ -91,7 +107,7 @@
 
 <script setup lang="ts">
 import { Disclosure, DisclosurePanel, DisclosureButton } from "@headlessui/vue";
-import { MinusSmIcon, PlusSmIcon } from "@heroicons/vue/solid";
+import { MinusSmIcon, PlusSmIcon, XIcon } from "@heroicons/vue/solid";
 import { Product } from "@medusajs/medusa";
 
 type Filter = {
@@ -171,4 +187,12 @@ const filteredProducts = computed<Product[]>(() => {
         )
     );
 });
+
+const resetFilters = () => {
+    for (const filter of filters.value) {
+        for (const option of filter.options) {
+            option.checked = false;
+        }
+    }
+};
 </script>
