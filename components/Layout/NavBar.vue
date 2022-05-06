@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-    <div class="sticky top-0 z-30 border-b border-b-grey-30 bg-white px-4">
+    <div class="sticky top-0 z-30 border-b border-b-grey-20 bg-white px-4">
         <div
             class="relative mx-auto flex h-14 max-w-6xl items-center justify-center"
         >

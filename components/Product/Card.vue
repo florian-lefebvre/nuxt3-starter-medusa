@@ -4,7 +4,12 @@
         class="rounded-2xl transition-all hover:scale-95 focus:ring focus:ring-violet-50"
     >
         <img
-            :src="product.thumbnail"
+            :src="
+                product.thumbnail ||
+                `https://via.placeholder.com/1678x2098/F3F4F6/6B7280?text=${encodeURIComponent(
+                    product.title
+                )}`
+            "
             :alt="product.title"
             class="rounded-2xl"
         />
