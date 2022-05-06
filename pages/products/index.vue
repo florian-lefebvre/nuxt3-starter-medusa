@@ -2,7 +2,7 @@
     <div class="py-20 px-4">
         <div class="custom-container">
             <div class="flex items-center justify-between">
-                <h2 class="text-4xl font-bold">A few products</h2>
+                <h2 class="text-4xl font-bold">Products</h2>
                 <div class="flex items-center space-x-4">
                     <div class="text-sm text-grey-50">
                         {{ filteredProducts.length }} out of
