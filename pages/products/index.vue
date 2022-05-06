@@ -4,6 +4,25 @@
             <div class="flex items-center justify-between">
                 <h2 class="text-4xl font-bold">Products</h2>
                 <div class="flex items-center space-x-4">
+                    <button
+                        type="button"
+                        @click="displayGrid = !displayGrid"
+                        class="text-grey-40 transition-all hover:text-grey-50"
+                    >
+                        <span class="sr-only"
+                            >View {{ displayGrid ? "grid" : "list" }}</span
+                        >
+                        <ViewGridIcon
+                            v-if="displayGrid"
+                            class="h-5 w-5"
+                            :aria-hidden="!displayGrid"
+                        />
+                        <MenuAlt2Icon
+                            v-else
+                            class="h-5 w-5"
+                            :aria-hidden="displayGrid"
+                        />
+                    </button>
                     <div class="text-sm text-grey-50">
                         {{ filteredProducts.length }} out of
                         {{ products.length }}
@@ -101,12 +120,13 @@
                     </div>
                 </div>
                 <div class="w-full">
-                    <ProductGrid v-if="filteredProducts.length > 0">
-                        <ProductCard
-                            v-for="product in filteredProducts"
-                            :product="product"
+                    <div v-if="filteredProducts.length > 0" class="contents">
+                        <ProductGrid
+                            v-if="displayGrid"
+                            :products="filteredProducts"
                         />
-                    </ProductGrid>
+                        <ProductList v-else :products="filteredProducts" />
+                    </div>
                     <div
                         v-else
                         class="mt-16 block text-center text-xl text-grey-50"
@@ -122,92 +142,23 @@
 
 <script setup lang="ts">
 import { Disclosure, DisclosurePanel, DisclosureButton } from "@headlessui/vue";
-import { MinusSmIcon, PlusSmIcon, XIcon } from "@heroicons/vue/solid";
-import { Product } from "@medusajs/medusa";
-
-type Filter = {
-    name: string;
-    options: {
-        value: string;
-        checked: boolean;
-    }[];
-};
+import {
+    MinusSmIcon,
+    PlusSmIcon,
+    XIcon,
+    ViewGridIcon,
+    MenuAlt2Icon,
+} from "@heroicons/vue/solid";
 
 const { $medusa } = useNuxtApp();
+
+const displayGrid = ref(true);
 
 const { data: products } = await useAsyncData("products", async () => {
     const { products } = await $medusa.products.list();
     return products;
 });
 
-const getFilters = (): Filter[] => {
-    const _filters: Filter[] = [];
-
-    for (const product of products.value) {
-        for (const { title, values } of product.options) {
-            if (!_filters.some((filter) => filter.name === title)) {
-                _filters.push({
-                    name: title,
-                    options: [],
-                });
-            }
-            const filter = _filters.find((filter) => filter.name === title);
-            for (const value of values) {
-                if (
-                    !filter.options.some(
-                        (option) => option.value === value.value
-                    )
-                ) {
-                    filter.options.push({
-                        value: value.value,
-                        checked: false,
-                    });
-                }
-            }
-        }
-    }
-
-    return _filters;
-};
-
-const filters = ref<Filter[]>(getFilters());
-
-const activeFilters = computed<Filter[]>(() => {
-    const _filters: Filter[] = [];
-    for (const filter of filters.value) {
-        const options = filter.options.filter((option) => option.checked);
-        if (options.length > 0) {
-            _filters.push({
-                name: filter.name,
-                options,
-            });
-        }
-    }
-    return _filters;
-});
-
-const filteredProducts = computed<Product[]>(() => {
-    if (activeFilters.value.length === 0) {
-        return products.value;
-    }
-    return products.value.filter((product) =>
-        activeFilters.value.every((filter) =>
-            product.options.some(
-                (option) =>
-                    option.title === filter.name &&
-                    filter.options.some((f) =>
-                        option.values.map((v) => v.value).includes(f.value)
-                    )
-            )
-        )
-    );
-});
-
-const resetFilters = () => {
-    for (const filter of filters.value) {
-        for (const option of filter.options) {
-            option.checked = false;
-        }
-    }
-};
+const { filters, activeFilters, filteredProducts, resetFilters } =
+    useFilters(products);
 </script>

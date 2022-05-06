@@ -39,7 +39,7 @@
                                 <button
                                     :class="[
                                         active
-                                            ? 'bg-grey-100 text-grey-90'
+                                            ? 'bg-grey-10 text-grey-90'
                                             : 'text-grey-70',
                                         country.display_name === countryName
                                             ? 'bg-violet-10 font-medium text-violet-90'

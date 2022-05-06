@@ -1,6 +1,6 @@
 <template>
-    <div class="grid grid-cols-4 gap-x-4 gap-y-12">
-        <ProductCard v-for="product in products" :product="product" />
+    <div class="grid gap-4 divide-y-2">
+        <ProductDetailed v-for="product in products" :product="product" />
     </div>
 </template>
 

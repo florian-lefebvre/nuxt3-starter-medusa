@@ -11,7 +11,7 @@ Backend server:
 ### Routes
 
 -   [x] /
--   [ ] /products
+-   [x] /products
 -   [ ] /products/[slug]
 -   [ ] /collections
 -   [ ] /collections/[slug]
