@@ -26,3 +26,4 @@ Backend server:
 -   [ ] /terms-and-conditions
 -   [ ] /privacy-policy
 -   [ ] /contact
+-   [ ] error.vue (root)

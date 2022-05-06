@@ -2,7 +2,7 @@
     <div class="py-20 px-4">
         <div class="custom-container">
             <div class="flex items-center justify-between">
-                <h2 class="text-4xl font-bold">Products</h2>
+                <h1 class="text-4xl font-bold">Products</h1>
                 <div class="flex items-center space-x-4">
                     <button
                         type="button"
@@ -162,6 +162,7 @@ const { data: products } = await useAsyncData("products", async () => {
     return products;
 });
 
-const { filters, activeFilters, filteredProducts, resetFilters } =
-    useFilters(products);
+const { filters, activeFilters, filteredProducts, resetFilters } = useFilters(
+    products.value
+);
 </script>

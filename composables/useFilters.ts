@@ -2,11 +2,11 @@ import { Product } from "@medusajs/medusa";
 import { Filter } from "~/types";
 import { Ref } from "vue";
 
-export const useFilters = (products: Ref<Product[]>) => {
+export const useFilters = (products: Product[]) => {
     const getFilters = (): Filter[] => {
         const _filters: Filter[] = [];
 
-        for (const product of products.value) {
+        for (const product of products) {
             for (const { title, values } of product.options) {
                 if (!_filters.some((filter) => filter.name === title)) {
                     _filters.push({
@@ -51,9 +51,9 @@ export const useFilters = (products: Ref<Product[]>) => {
 
     const filteredProducts = computed<Product[]>(() => {
         if (activeFilters.value.length === 0) {
-            return products.value;
+            return products;
         }
-        return products.value.filter((product) =>
+        return products.filter((product) =>
             activeFilters.value.every((filter) =>
                 product.options.some(
                     (option) =>
