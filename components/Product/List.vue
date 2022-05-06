@@ -1,5 +1,5 @@
 <template>
-    <div class="grid gap-4 divide-y-2">
+    <div class="grid gap-12">
         <ProductDetailed v-for="product in products" :product="product" />
     </div>
 </template>

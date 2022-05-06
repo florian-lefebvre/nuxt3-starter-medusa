@@ -11,6 +11,7 @@
                 )}`
             "
             :alt="product.title"
+            loading="lazy"
             class="rounded-2xl"
         />
         <div class="p-4 text-left">
