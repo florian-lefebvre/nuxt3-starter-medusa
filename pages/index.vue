@@ -31,7 +31,7 @@
                         <ArrowRightIcon class="h-4 w-4" />
                     </NuxtLink>
                 </div>
-                <ProductGrid>
+                <ProductGrid class="mt-10">
                     <ProductCard
                         v-for="product in products"
                         :product="product"

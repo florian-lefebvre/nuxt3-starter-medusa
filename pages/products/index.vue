@@ -1,9 +1,17 @@
 <template>
     <div class="py-20 px-4">
         <div class="custom-container">
-            <div>PRODUCTS</div>
-            <div class="flex">
-                <div class="mr-4 mt-10 w-64 flex-shrink-0">
+            <div class="flex items-center justify-between">
+                <h2 class="text-4xl font-bold">A few products</h2>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-grey-50">
+                        {{ filteredProducts.length }} out of
+                        {{ products.length }}
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 flex">
+                <div class="mr-4 w-64 flex-shrink-0">
                     <div class="sticky top-16">
                         <Disclosure
                             as="div"
@@ -92,13 +100,20 @@
                         </transition>
                     </div>
                 </div>
-                <div>
-                    <ProductGrid>
+                <div class="w-full">
+                    <ProductGrid v-if="filteredProducts.length > 0">
                         <ProductCard
                             v-for="product in filteredProducts"
                             :product="product"
                         />
                     </ProductGrid>
+                    <div
+                        v-else
+                        class="mt-16 block text-center text-xl text-grey-50"
+                    >
+                        No products match the active filters. Try something
+                        else!
+                    </div>
                 </div>
             </div>
         </div>
