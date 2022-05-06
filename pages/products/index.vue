@@ -24,7 +24,7 @@
                         />
                     </button>
                     <div class="text-sm text-grey-50">
-                        {{ filteredProducts.length }} out of
+                        {{ filteredProducts.length }} of
                         {{ products.length }}
                     </div>
                 </div>

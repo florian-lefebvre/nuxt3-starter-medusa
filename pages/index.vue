@@ -34,7 +34,7 @@
                 <ProductGrid class="mt-10" :products="products" />
             </div>
         </div>
-        <div class="py-20 px-4">
+        <div v-if="collections.length > 0" class="py-20 px-4">
             <div class="custom-container">
                 <div class="flex items-center justify-between">
                     <h2 class="text-4xl font-bold">Our collections</h2>
