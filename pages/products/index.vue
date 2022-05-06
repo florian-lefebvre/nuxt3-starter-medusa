@@ -6,7 +6,7 @@
                 <div class="flex items-center space-x-4">
                     <button
                         type="button"
-                        @click="displayGrid = !displayGrid"
+                        @click="switchDisplay()"
                         class="text-grey-40 transition-all hover:text-grey-50"
                     >
                         <span class="sr-only"
@@ -149,10 +149,13 @@ import {
     ViewGridIcon,
     MenuAlt2Icon,
 } from "@heroicons/vue/solid";
+import { UsePreferencesRefs } from "~/types/stores";
 
 const { $medusa } = useNuxtApp();
-
-const displayGrid = ref(true);
+const preferences = usePreferences();
+const { productsDisplay }: UsePreferencesRefs = storeToRefs(preferences) as any;
+const { switchDisplay } = preferences;
+const displayGrid = computed(() => productsDisplay.value === "grid");
 
 const { data: products } = await useAsyncData("products", async () => {
     const { products } = await $medusa.products.list();

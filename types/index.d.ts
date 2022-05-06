@@ -5,3 +5,5 @@ export type Filter = {
         checked: boolean;
     }[];
 };
+
+export type ProductsDisplay = "grid" | "list";
