@@ -3,11 +3,22 @@
         <div class="custom-container">
             <div class="grid grid-cols-5 gap-8">
                 <div class="col-span-2">
-                    <img
-                        :src="imageUrl"
-                        :alt="product.title"
-                        class="rounded-2xl"
-                    />
+                    <transition
+                        enter-active-class="transition ease duration-300"
+                        enter-from-class="opacity-0"
+                        enter-to-class="opacity-100"
+                        leave-active-class="transition ease duration-300"
+                        leave-from-class="opacity-100"
+                        leave-to-class="opacity-0"
+                        mode="out-in"
+                    >
+                        <img
+                            :key="imageUrl"
+                            :src="imageUrl"
+                            :alt="product.title"
+                            class="rounded-2xl"
+                        />
+                    </transition>
                     <div
                         class="mt-6 grid grid-cols-4 gap-2"
                         v-if="product.images.length > 1"

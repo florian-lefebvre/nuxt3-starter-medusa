@@ -121,11 +121,21 @@
                 </div>
                 <div class="w-full">
                     <div v-if="filteredProducts.length > 0" class="contents">
-                        <ProductGrid
-                            v-if="displayGrid"
-                            :products="filteredProducts"
-                        />
-                        <ProductList v-else :products="filteredProducts" />
+                        <transition
+                            enter-active-class="transition ease duration-300"
+                            enter-from-class="opacity-0"
+                            enter-to-class="opacity-100"
+                            leave-active-class="transition ease duration-300"
+                            leave-from-class="opacity-100"
+                            leave-to-class="opacity-0"
+                            mode="out-in"
+                        >
+                            <ProductGrid
+                                v-if="displayGrid"
+                                :products="filteredProducts"
+                            />
+                            <ProductList v-else :products="filteredProducts" />
+                        </transition>
                     </div>
                     <div
                         v-else
