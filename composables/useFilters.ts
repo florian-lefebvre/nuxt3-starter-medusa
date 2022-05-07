@@ -1,6 +1,5 @@
 import { Product } from "@medusajs/medusa";
 import { Filter } from "~/types";
-import { Ref } from "vue";
 
 export const useFilters = (products: Product[]) => {
     const getFilters = (): Filter[] => {

@@ -31,11 +31,10 @@
                 </div>
                 <div class="col-span-3">
                     <h1 class="mb-2 text-4xl font-bold">{{ product.title }}</h1>
-                    <ClientOnly>
-                        <div class="text-5xl text-violet-50">
-                            {{ price }}
-                        </div>
-                    </ClientOnly>
+                    <div class="text-4xl text-violet-50">
+                        {{ price }}
+                    </div>
+
                     <p class="mt-8 text-lg text-grey-60">
                         {{ product.description }}
                     </p>
@@ -113,7 +112,6 @@
                             </button>
                         </div>
                     </div>
-                    <pre>{{ variant }}</pre>
                 </div>
             </div>
             <div>
@@ -175,7 +173,7 @@ const variant = computed(() => {
 const { formatPrice } = usePrices();
 
 // TODO: check issue with price: not the right one (22€ expected but 19.5€ received)
-const price = formatPrice(variant.value);
+const price = computed(() => formatPrice(variant.value));
 
 const quantity = ref(1);
 

@@ -1,12 +1,9 @@
 import { LineItem, Product } from "@medusajs/medusa";
 
-export default function () {
+export const useHelpers = () => {
     const quantity = (item: LineItem): number => item.quantity;
 
     const sum = (prev: number, next: number): number => prev + next;
-
-    const formatPrice = (price: number, currency: string): string =>
-        `${(price / 100).toFixed(2)} ${currency.toUpperCase()}`;
 
     const getSlug = (path: string): string => {
         const temp = path.split("/");
@@ -30,9 +27,8 @@ export default function () {
     return {
         quantity,
         sum,
-        formatPrice,
         getSlug,
         resetOptions,
         isEmpty,
     };
-}
+};

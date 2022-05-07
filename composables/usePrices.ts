@@ -2,7 +2,7 @@ import { UseStoreRefs } from "~/types/stores";
 import { Product, ProductVariant } from "@medusajs/medusa";
 import defaults from "~/utils/defaults";
 
-export default function () {
+export const usePrices = () => {
     const store = useStore();
     const { taxRate, currencyCode, region, countryName }: UseStoreRefs =
         storeToRefs(store) as any;
@@ -12,23 +12,21 @@ export default function () {
         digits: number,
         taxRate: number = 0
     ) => {
-        const iso = computed(() => {
+        const iso = (() => {
             const country = region.value.countries.find(
                 (country) => country.display_name === countryName.value
             );
             if (!country) {
                 return defaults.iso;
             }
-            return country.iso_3;
-        });
+            return country.iso_2;
+        })();
 
-        return computed(() =>
-            new Intl.NumberFormat(iso.value, {
-                style: "currency",
-                currency: currencyCode.value,
-                minimumFractionDigits: digits,
-            }).format(amount * (1 + taxRate / 100))
-        );
+        return new Intl.NumberFormat(iso, {
+            style: "currency",
+            currency: currencyCode.value,
+            minimumFractionDigits: digits,
+        }).format(amount * (1 + taxRate / 100));
     };
 
     const getVariantPrice = (variant: ProductVariant) => {
@@ -37,28 +35,24 @@ export default function () {
                 p.currency_code.toLowerCase() ===
                 currencyCode.value.toLowerCase()
         );
-
-        return computed(() => (moneyAmount.amount * (1 + taxRate.value)) / 100);
+        return (moneyAmount.amount * (1 + taxRate.value)) / 100;
     };
 
     const formatPrice = (variant: ProductVariant, digits: number = 2) =>
-        computed(() =>
-            variant.prices.length === 0
-                ? "No price"
-                : formatMoneyAmount(getVariantPrice(variant).value, digits)
-                      .value
-        );
+        variant.prices.length === 0
+            ? "No price"
+            : formatMoneyAmount(getVariantPrice(variant), digits);
 
     const getProductExtremeVariants = (product: Product) => {
         const variants = product.variants;
         const prices = variants.map((variant) => getVariantPrice(variant));
-        const max = Math.max(...prices.map((p) => p.value));
-        const min = Math.min(...prices.map((p) => p.value));
+        const max = Math.max(...prices.map((p) => p));
+        const min = Math.min(...prices.map((p) => p));
         const maxVariant = variants.find(
-            (variant) => getVariantPrice(variant).value === max
+            (variant) => getVariantPrice(variant) === max
         );
         const minVariant = variants.find(
-            (variant) => getVariantPrice(variant).value === min
+            (variant) => getVariantPrice(variant) === min
         );
         return { max, min, maxVariant, minVariant };
     };
@@ -69,4 +63,4 @@ export default function () {
         formatPrice,
         getProductExtremeVariants,
     };
-}
+};

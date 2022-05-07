@@ -17,14 +17,10 @@
         <div class="flex flex-col">
             <div class="mb-2 text-xl font-medium">{{ product.title }}</div>
             <div class="text-grey-50">{{ product.description }}</div>
-            <ClientOnly>
-                <div class="mt-auto text-lg">
-                    <span class="text-grey-70">From </span>
-                    <span class="font-semibold text-violet-50">{{
-                        price
-                    }}</span>
-                </div>
-            </ClientOnly>
+            <div class="mt-auto text-lg">
+                <span class="text-grey-70">From </span>
+                <span class="font-semibold text-violet-50">{{ price }}</span>
+            </div>
         </div>
     </NuxtLink>
 </template>
@@ -36,5 +32,7 @@ const props = defineProps<{ product: Product }>();
 
 const { formatPrice, getProductExtremeVariants } = usePrices();
 
-const price = formatPrice(getProductExtremeVariants(props.product).minVariant);
+const price = computed(() =>
+    formatPrice(getProductExtremeVariants(props.product).minVariant)
+);
 </script>

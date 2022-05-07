@@ -1,5 +1,3 @@
-import { H3Error } from "h3";
-
 interface _Error {
     statusCode: number;
     statusMessage: string;

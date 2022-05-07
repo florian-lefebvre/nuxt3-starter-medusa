@@ -14,6 +14,10 @@
 </template>
 
 <script setup lang="ts">
-const { initialize } = useStore();
-await useAsyncData("init-medusa", () => initialize());
+const store = useStore();
+const { initialize } = store;
+
+await useAsyncData("init-medusa", async () => {
+    await initialize();
+});
 </script>
