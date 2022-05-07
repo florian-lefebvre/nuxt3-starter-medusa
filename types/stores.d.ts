@@ -9,6 +9,7 @@ export type UseStoreRefs = {
     region: Ref<Region>;
     currencyCode: Ref<string>;
     taxRate: Ref<number>;
+    adding: Ref<boolean>;
 };
 
 export type UseDisplayRefs = {

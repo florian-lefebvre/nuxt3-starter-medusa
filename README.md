@@ -27,3 +27,7 @@ Backend server:
 -   [ ] /privacy-policy
 -   [ ] /contact
 -   [ ] error.vue (root)
+
+### Misc
+
+-   [ ] Ensure right semantic html tags are used

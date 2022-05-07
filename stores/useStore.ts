@@ -11,6 +11,7 @@ export const useStore = defineStore(KEY, () => {
     const cart = ref<Partial<Cart>>();
     const countryName = ref<string>(defaults.country);
     const regions = ref<Region[]>([]);
+    const adding = ref<boolean>(false);
 
     const storage = useStoreStorage({
         key: KEY,
@@ -59,6 +60,25 @@ export const useStore = defineStore(KEY, () => {
         countryName.value = c;
     };
 
+    const addVariantToCart = async ({
+        variantId,
+        quantity,
+    }: {
+        variantId: string;
+        quantity: number;
+    }) => {
+        if (adding.value) {
+            return;
+        }
+        adding.value = true;
+        const data = await $medusa.carts.lineItems.create(cart.value.id, {
+            variant_id: variantId,
+            quantity,
+        });
+        cart.value = data.cart;
+        adding.value = false;
+    };
+
     const initialize = async () => {
         storage.init();
         await retrieveCart();
@@ -80,8 +100,8 @@ export const useStore = defineStore(KEY, () => {
         initialize,
         // order,
         // products,
-        // adding,
-        // addVariantToCart,
+        adding,
+        addVariantToCart,
         // removeLineItem,
         // updateLineItem,
         // getShippingOptions,
@@ -105,20 +125,6 @@ export const useStore = defineStore(KEY, () => {
 //   const data = await client.products.list();
 //   products.value = data.products;
 // });
-
-// const addVariantToCart = async ({
-//   variantId,
-//   quantity,
-// }: {
-//   variantId: string;
-//   quantity: number;
-// }) => {
-//   const data = await client.carts.lineItems.create(cart.value.id, {
-//     variant_id: variantId,
-//     quantity,
-//   });
-//   cart.value = data.cart;
-// };
 
 // const removeLineItem = async (lineId: string) => {
 //   const data = await client.carts.lineItems.delete(cart.value.id, lineId);

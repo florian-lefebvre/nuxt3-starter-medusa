@@ -116,7 +116,7 @@
                 >
                     <ShoppingBagIcon class="h-full" />
                     <span class="text-xl leading-none">{{
-                        cart.items.length
+                        itemsQuantity
                     }}</span>
                 </button>
             </div>
@@ -154,5 +154,13 @@ const countries = computed(() => {
         }
     }
     return _countries;
+});
+
+const itemsQuantity = computed(() => {
+    let quantity = 0;
+    for (const item of cart.value.items) {
+        quantity += item.quantity;
+    }
+    return quantity;
 });
 </script>

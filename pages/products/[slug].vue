@@ -95,8 +95,9 @@
                     </div>
                     <div class="mt-10 flex space-x-4">
                         <button
-                            @click="() => {}"
-                            class="flex w-full items-center justify-center space-x-2 rounded-md bg-violet-50 px-6 py-3 font-medium text-white transition-all hover:bg-violet-60 focus:ring focus:ring-violet-60 focus:ring-offset-2 focus:ring-offset-white"
+                            @click="addToCart()"
+                            :disabled="adding"
+                            class="flex w-full items-center justify-center space-x-2 rounded-md bg-violet-50 px-6 py-3 font-medium text-white transition-all hover:bg-violet-60 focus:ring focus:ring-violet-60 focus:ring-offset-2 focus:ring-offset-white disabled:bg-grey-40"
                         >
                             <div>Add to cart</div>
                         </button>
@@ -114,9 +115,7 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <pre>{{ product }}</pre>
-            </div>
+            <div></div>
         </div>
     </div>
 </template>
@@ -125,6 +124,7 @@
 import { Product } from "@medusajs/medusa";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
 import { PlusIcon, MinusIcon } from "@heroicons/vue/solid";
+import { UseStoreRefs } from "~~/types/stores";
 
 const { $medusa } = useNuxtApp();
 const route = useRoute();
@@ -192,4 +192,14 @@ const imageUrl = ref(
             product.value.title
         )}`
 );
+
+const store = useStore();
+const { adding }: UseStoreRefs = storeToRefs(store) as any;
+const { addVariantToCart } = store;
+
+const addToCart = async () =>
+    await addVariantToCart({
+        variantId: variant.value.id,
+        quantity: quantity.value,
+    });
 </script>
