@@ -11,6 +11,9 @@ export default <RouterConfig>{
                 el: to.hash,
             };
         }
+        if (to.path === from.path && to.query !== from.query) {
+            return;
+        }
         return { top: 0 };
     },
 };
