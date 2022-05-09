@@ -75,7 +75,7 @@
                             to="/checkout"
                             class="flex w-full items-center justify-center space-x-2 rounded-md bg-violet-50 px-6 py-3 font-medium text-white transition-all hover:bg-violet-60 focus:ring focus:ring-violet-60 focus:ring-offset-2 focus:ring-offset-white disabled:bg-grey-40"
                         >
-                            <span>CHECKOUT</span>
+                            <span>Checkout</span>
                             <span class="text-violet-20">
                                 ({{
                                     formatMoneyAmount(applyTax(cart.total), 2)
