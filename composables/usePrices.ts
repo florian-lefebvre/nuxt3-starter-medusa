@@ -7,11 +7,7 @@ export const usePrices = () => {
     const { taxRate, currencyCode, region, countryName }: UseStoreRefs =
         storeToRefs(store) as any;
 
-    const formatMoneyAmount = (
-        amount: number,
-        digits: number,
-        taxRate: number = 0
-    ) => {
+    const formatMoneyAmount = (amount: number, digits: number) => {
         const iso = (() => {
             const country = region.value.countries.find(
                 (country) => country.display_name === countryName.value
@@ -26,33 +22,37 @@ export const usePrices = () => {
             style: "currency",
             currency: currencyCode.value,
             minimumFractionDigits: digits,
-        }).format(amount * (1 + taxRate / 100));
+        }).format(amount);
     };
 
+    const applyTax = (amount: number) => (amount * (1 + taxRate.value)) / 100;
+
     const getVariantPrice = (variant: ProductVariant) => {
-        const moneyAmount = variant.prices.find(
+        return variant.prices.find(
             (p) =>
                 p.currency_code.toLowerCase() ===
                 currencyCode.value.toLowerCase()
         );
-        return (moneyAmount.amount * (1 + taxRate.value)) / 100;
     };
 
     const formatPrice = (variant: ProductVariant, digits: number = 2) =>
         variant.prices.length === 0
             ? "No price"
-            : formatMoneyAmount(getVariantPrice(variant), digits);
+            : formatMoneyAmount(
+                  applyTax(getVariantPrice(variant).amount),
+                  digits
+              );
 
     const getProductExtremeVariants = (product: Product) => {
         const variants = product.variants;
         const prices = variants.map((variant) => getVariantPrice(variant));
-        const max = Math.max(...prices.map((p) => p));
-        const min = Math.min(...prices.map((p) => p));
+        const max = Math.max(...prices.map((p) => applyTax(p.amount)));
+        const min = Math.min(...prices.map((p) => applyTax(p.amount)));
         const maxVariant = variants.find(
-            (variant) => getVariantPrice(variant) === max
+            (variant) => applyTax(getVariantPrice(variant).amount) === max
         );
         const minVariant = variants.find(
-            (variant) => getVariantPrice(variant) === min
+            (variant) => applyTax(getVariantPrice(variant).amount) === min
         );
         return { max, min, maxVariant, minVariant };
     };
@@ -62,5 +62,6 @@ export const usePrices = () => {
         getVariantPrice,
         formatPrice,
         getProductExtremeVariants,
+        applyTax,
     };
 };

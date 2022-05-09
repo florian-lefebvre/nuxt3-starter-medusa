@@ -23,7 +23,7 @@
                     leave-to-class="transform opacity-0 scale-95"
                 >
                     <MenuItems
-                        class="absolute left-0 z-40 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        class="absolute left-0 z-40 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     >
                         <div class="py-1">
                             <MenuItem
@@ -111,32 +111,29 @@
                 >
                     <SearchIcon class="h-full" />
                 </button>
-                <button
-                    class="flex h-full items-end space-x-1 border-b-2 border-transparent py-4 font-medium text-grey-40 transition-colors hover:text-grey-50"
+                <transition
+                    enter-active-class="transition ease-out duration-100"
+                    enter-from-class="transform opacity-0 scale-95"
+                    enter-to-class="transform opacity-100 scale-100"
+                    leave-active-class="transition ease-in duration-75"
+                    leave-from-class="transform opacity-100 scale-100"
+                    leave-to-class="transform opacity-0 scale-95"
                 >
-                    <ShoppingBagIcon class="h-full" />
-                    <span class="text-xl leading-none">{{
-                        itemsQuantity
-                    }}</span>
-                </button>
+                    <CartOverwiew v-if="route.fullPath !== '/checkout'" />
+                </transition>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-// https://tailwindui.com/components/ecommerce/components/store-navigation
-import {
-    ShoppingBagIcon,
-    SearchIcon,
-    ChevronDownIcon,
-} from "@heroicons/vue/outline";
+import { SearchIcon, ChevronDownIcon } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { Country, Region } from "@medusajs/medusa";
 import { UseStoreRefs } from "~/types/stores";
 
 const store = useStore();
-const { cart, countryName, regions, currencyCode }: UseStoreRefs = storeToRefs(
+const { countryName, regions, currencyCode }: UseStoreRefs = storeToRefs(
     store
 ) as any;
 const { setRegion } = store;
@@ -156,11 +153,5 @@ const countries = computed(() => {
     return _countries;
 });
 
-const itemsQuantity = computed(() => {
-    let quantity = 0;
-    for (const item of cart.value.items) {
-        quantity += item.quantity;
-    }
-    return quantity;
-});
+const route = useRoute();
 </script>

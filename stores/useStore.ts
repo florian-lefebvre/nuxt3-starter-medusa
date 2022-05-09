@@ -79,6 +79,31 @@ export const useStore = defineStore(KEY, () => {
         adding.value = false;
     };
 
+    const removeLineItem = async (lineId: string) => {
+        const data = await $medusa.carts.lineItems.delete(
+            cart.value.id,
+            lineId
+        );
+        cart.value = data.cart;
+    };
+
+    const updateLineItem = async ({
+        lineId,
+        quantity,
+    }: {
+        lineId: string;
+        quantity: number;
+    }) => {
+        const data = await $medusa.carts.lineItems.update(
+            cart.value.id,
+            lineId,
+            {
+                quantity,
+            }
+        );
+        cart.value = data.cart;
+    };
+
     const initialize = async () => {
         storage.init();
         await retrieveCart();
@@ -102,8 +127,8 @@ export const useStore = defineStore(KEY, () => {
         // products,
         adding,
         addVariantToCart,
-        // removeLineItem,
-        // updateLineItem,
+        removeLineItem,
+        updateLineItem,
         // getShippingOptions,
         // setShippingMethod,
         // updateAddress,
@@ -125,24 +150,6 @@ export const useStore = defineStore(KEY, () => {
 //   const data = await client.products.list();
 //   products.value = data.products;
 // });
-
-// const removeLineItem = async (lineId: string) => {
-//   const data = await client.carts.lineItems.delete(cart.value.id, lineId);
-//   cart.value = data.cart;
-// };
-
-// const updateLineItem = async ({
-//   lineId,
-//   quantity,
-// }: {
-//   lineId: string;
-//   quantity: number;
-// }) => {
-//   const data = await client.carts.lineItems.update(cart.value.id, lineId, {
-//     quantity,
-//   });
-//   cart.value = data.cart;
-// };
 
 // const getShippingOptions = async () => {
 //   const { shipping_options: data } =

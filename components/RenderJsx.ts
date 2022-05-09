@@ -1,6 +1,6 @@
 import { PropType, VNode } from "vue";
 
-export default {
+export default defineComponent({
     props: {
         render: {
             type: Object as PropType<VNode>,
@@ -10,4 +10,4 @@ export default {
     setup(props) {
         return () => props.render;
     },
-};
+});
