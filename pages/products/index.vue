@@ -162,21 +162,15 @@ import {
 } from "@heroicons/vue/solid";
 import { UsePreferencesRefs } from "~/types/stores";
 
-const { $medusa } = useNuxtApp();
 const preferences = usePreferences();
 const { productsDisplay }: UsePreferencesRefs = storeToRefs(preferences) as any;
 const { switchDisplay } = preferences;
 const displayGrid = computed(() => productsDisplay.value === "grid");
 
-const { data: products } = await useAsyncData("products", async () => {
-    const { products } = await $medusa.products.list();
-    return products;
-});
+const { fetchProducts, fetchCollections } = useFetches();
 
-const { data: collections } = await useAsyncData("collections", async () => {
-    const { collections } = await $medusa.collections.list();
-    return collections;
-});
+const products = await fetchProducts();
+const collections = await fetchCollections();
 
 const { filters, activeFilters, filteredProducts, resetFilters } = useFilters({
     products: products.value,

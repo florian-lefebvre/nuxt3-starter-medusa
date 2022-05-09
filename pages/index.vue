@@ -79,15 +79,8 @@
 <script setup lang="ts">
 import { ArrowRightIcon } from "@heroicons/vue/solid";
 
-const { $medusa } = useNuxtApp();
+const { fetchProductsOverview, fetchCollectionsOverview } = useFetches();
 
-const { data: products } = useAsyncData("products-overview", async () => {
-    const { products } = await $medusa.products.list({ limit: 4 });
-    return products;
-});
-
-const { data: collections } = useAsyncData("collections-overview", async () => {
-    const { collections } = await $medusa.collections.list({ limit: 3 });
-    return collections;
-});
+const products = await fetchProductsOverview();
+const collections = await fetchCollectionsOverview();
 </script>

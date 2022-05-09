@@ -157,7 +157,14 @@ if (!product.value) {
     });
 }
 
-const { filters } = useFilters([product.value as Product]);
+const { fetchCollections } = useFetches();
+
+const collections = await fetchCollections();
+
+const { filters } = useFilters({
+    products: [product.value as Product],
+    collections: collections.value,
+});
 
 const selectedOptions = ref(
     Object.fromEntries(
@@ -183,7 +190,6 @@ const variant = computed(() => {
 
 const { formatPrice } = usePrices();
 
-// TODO: check issue with price: not the right one (22€ expected but 19.5€ received)
 const price = computed(() => formatPrice(variant.value));
 
 const quantity = ref(1);
