@@ -12,7 +12,7 @@ Backend server:
 
 -   [x] /
 -   [x] /products
--   [ ] /products/[slug]
+-   [x] /products/[slug]
 -   [ ] /collections
 -   [ ] /collections/[slug]
 -   [ ] /account
