@@ -41,6 +41,7 @@
                                     i !== filters.length - 1,
                             }"
                             v-slot="{ open }"
+                            :default-open="true"
                         >
                             <h3 class="-my-3 flow-root">
                                 <DisclosureButton
@@ -172,7 +173,49 @@ const { data: products } = await useAsyncData("products", async () => {
     return products;
 });
 
-const { filters, activeFilters, filteredProducts, resetFilters } = useFilters(
-    products.value
-);
+const { data: collections } = await useAsyncData("collections", async () => {
+    const { collections } = await $medusa.collections.list();
+    return collections;
+});
+
+const { filters, activeFilters, filteredProducts, resetFilters } = useFilters({
+    products: products.value,
+    collections: collections.value,
+});
+
+const route = useRoute();
+const router = useRouter();
+
+watch(activeFilters, () => {
+    const query = {};
+    for (const filter of activeFilters.value) {
+        query[filter.name] = filter.options.map(({ value }) => value);
+    }
+    router.push({
+        path: route.path,
+        query,
+    });
+});
+
+const initFilters = (query: typeof route.query) => {
+    for (const [key, value] of Object.entries(query)) {
+        const filter = filters.value.find(({ name }) => name === key);
+        if (!filter) {
+            continue;
+        }
+        for (const option of filter.options) {
+            if (typeof value === "string") {
+                if (value === option.value) {
+                    option.checked = true;
+                }
+            } else {
+                if (value.includes(option.value)) {
+                    option.checked = true;
+                }
+            }
+        }
+    }
+};
+// Auto query reset fixed in RC3
+initFilters(route.query);
 </script>

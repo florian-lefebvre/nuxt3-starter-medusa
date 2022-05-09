@@ -31,3 +31,4 @@ Backend server:
 ### Misc
 
 -   [ ] Ensure right semantic html tags are used
+-   [ ] Responsive design

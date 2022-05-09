@@ -1,7 +1,13 @@
-import { Product } from "@medusajs/medusa";
+import { Product, ProductCollection } from "@medusajs/medusa";
 import { Filter } from "~/types";
 
-export const useFilters = (products: Product[]) => {
+export const useFilters = ({
+    products,
+    collections,
+}: {
+    products: Product[];
+    collections: ProductCollection[];
+}) => {
     const getFilters = (): Filter[] => {
         const _filters: Filter[] = [];
 
@@ -29,6 +35,16 @@ export const useFilters = (products: Product[]) => {
             }
         }
 
+        if (collections.length > 0) {
+            _filters.push({
+                name: "Collection",
+                options: collections.map((c) => ({
+                    value: c.title,
+                    checked: false,
+                })),
+            });
+        }
+
         return _filters;
     };
 
@@ -54,13 +70,17 @@ export const useFilters = (products: Product[]) => {
         }
         return products.filter((product) =>
             activeFilters.value.every((filter) =>
-                product.options.some(
-                    (option) =>
+                product.options.some((option) => {
+                    if (filter.name === "Collection" && product.collection_id) {
+                        return true;
+                    }
+                    return (
                         option.title === filter.name &&
                         filter.options.some((f) =>
                             option.values.map((v) => v.value).includes(f.value)
                         )
-                )
+                    );
+                })
             )
         );
     });

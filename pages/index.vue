@@ -86,7 +86,7 @@ const { data: products } = useAsyncData("products-overview", async () => {
     return products;
 });
 
-const { data: collections } = useAsyncData("collections", async () => {
+const { data: collections } = useAsyncData("collections-overview", async () => {
     const { collections } = await $medusa.collections.list({ limit: 3 });
     return collections;
 });
