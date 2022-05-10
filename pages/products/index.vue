@@ -180,17 +180,6 @@ const { filters, activeFilters, filteredProducts, resetFilters } = useFilters({
 const route = useRoute();
 const router = useRouter();
 
-watch(activeFilters, () => {
-    const query = {};
-    for (const filter of activeFilters.value) {
-        query[filter.name] = filter.options.map(({ value }) => value);
-    }
-    router.push({
-        path: route.path,
-        query,
-    });
-});
-
 const initFilters = (query: typeof route.query) => {
     for (const [key, value] of Object.entries(query)) {
         const filter = filters.value.find(({ name }) => name === key);
@@ -210,5 +199,17 @@ const initFilters = (query: typeof route.query) => {
         }
     }
 };
+
 initFilters(route.query);
+
+watch(activeFilters, () => {
+    const query = {};
+    for (const filter of activeFilters.value) {
+        query[filter.name] = filter.options.map(({ value }) => value);
+    }
+    router.push({
+        path: route.path,
+        query,
+    });
+});
 </script>
