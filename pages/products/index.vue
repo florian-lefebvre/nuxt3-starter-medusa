@@ -210,6 +210,5 @@ const initFilters = (query: typeof route.query) => {
         }
     }
 };
-// Auto query reset fixed in RC3
 initFilters(route.query);
 </script>
