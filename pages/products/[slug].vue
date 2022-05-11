@@ -161,10 +161,14 @@ const { fetchCollections } = useFetches();
 
 const collections = await fetchCollections();
 
-const { filters } = useFilters({
+const { filters: _filters } = useFilters({
     products: [product.value as Product],
     collections: collections.value,
 });
+
+const filters = computed(() =>
+    _filters.value.filter(({ name }) => name !== "Collection")
+);
 
 const selectedOptions = ref(
     Object.fromEntries(

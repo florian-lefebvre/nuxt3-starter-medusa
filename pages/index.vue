@@ -50,7 +50,7 @@
                     <NuxtLink
                         :to="`/collections/${collection.handle}`"
                         v-for="collection in collections"
-                        class="relative overflow-hidden rounded-2xl transition-all hover:scale-95"
+                        class="relative overflow-hidden rounded-2xl transition-all hover:scale-95 focus:ring focus:ring-violet-50"
                     >
                         <div class="aspect-[5/6] overflow-hidden">
                             <img
