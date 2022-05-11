@@ -15,6 +15,7 @@
             leave-to-class="transform opacity-0 scale-95"
         >
             <PopoverPanel
+                v-slot="{ close }"
                 class="absolute right-0 z-40 mt-2 flex max-h-[calc(100vh-120px)] w-96 origin-top-right flex-col rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
                 <div v-if="itemsQuantity > 0" class="contents">
@@ -73,6 +74,7 @@
                     <div class="m-2 mt-4 grid gap-2">
                         <NuxtLink
                             to="/checkout"
+                            @click="close()"
                             class="flex w-full items-center justify-center space-x-2 rounded-md bg-violet-50 px-6 py-3 font-medium text-white transition-all hover:bg-violet-60 focus:ring focus:ring-violet-60 focus:ring-offset-2 focus:ring-offset-white disabled:bg-grey-40"
                         >
                             <span>Checkout</span>
@@ -84,6 +86,7 @@
                         </NuxtLink>
                         <NuxtLink
                             to="/shopping-cart"
+                            @click="close()"
                             class="w-full rounded-md px-6 py-2 text-center font-medium text-violet-50 transition-all hover:underline"
                             >View cart</NuxtLink
                         >

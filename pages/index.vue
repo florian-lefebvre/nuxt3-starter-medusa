@@ -52,11 +52,13 @@
                         v-for="collection in collections"
                         class="relative overflow-hidden rounded-2xl transition-all hover:scale-95"
                     >
-                        <img
-                            :src="collection.metadata.image"
-                            :alt="collection.title"
-                            class=""
-                        />
+                        <div class="aspect-[5/6] overflow-hidden">
+                            <img
+                                :src="collection.metadata.image"
+                                :alt="collection.title"
+                                class="h-full w-full object-cover object-center"
+                            />
+                        </div>
                         <div
                             class="absolute inset-0 flex items-end justify-start bg-gradient-to-b from-black/0 to-black p-6"
                         >

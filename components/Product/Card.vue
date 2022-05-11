@@ -11,7 +11,7 @@
                 )}`
             "
             :alt="product.title"
-            loading="lazy"
+            :loading="lazy ? 'lazy' : undefined"
             class="rounded-2xl"
         />
         <div class="p-4 text-left">
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { Product } from "@medusajs/medusa";
 
-const props = defineProps<{ product: Product }>();
+const props = defineProps<{ product: Product; lazy: boolean }>();
 
 const { formatPrice, getProductExtremeVariants } = usePrices();
 

@@ -27,7 +27,7 @@
                     <MenuItem
                         v-slot="{ active }"
                         v-for="country in countries"
-                        @click.native="
+                        @click="
                             setRegion({
                                 countryName: country.display_name,
                                 regionId: country.region_id,

@@ -1,5 +1,5 @@
 html {
-    @apply scroll-pt-16 scroll-smooth;
+    @apply scroll-pt-16 scroll-smooth selection:bg-violet-50 selection:text-white;
 }
 
 .custom-container {

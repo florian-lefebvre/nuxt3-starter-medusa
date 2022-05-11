@@ -1,6 +1,10 @@
 <template>
     <div class="grid grid-cols-4 gap-x-4 gap-y-12">
-        <ProductCard v-for="product in products" :product="product" />
+        <ProductCard
+            v-for="(product, i) in products"
+            :product="product"
+            :lazy="i > 3"
+        />
     </div>
 </template>
 

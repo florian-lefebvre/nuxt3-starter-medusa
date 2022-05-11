@@ -11,7 +11,7 @@
                 )}`
             "
             :alt="product.title"
-            loading="lazy"
+            :loading="lazy ? 'lazy' : undefined"
             class="mr-4 h-full rounded-2xl"
         />
         <div class="flex flex-col">
@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { Product } from "@medusajs/medusa";
 
-const props = defineProps<{ product: Product }>();
+const props = defineProps<{ product: Product; lazy: boolean }>();
 
 const { formatPrice, getProductExtremeVariants } = usePrices();
 
