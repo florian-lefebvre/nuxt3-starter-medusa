@@ -62,12 +62,17 @@
                                         }}
                                     </div>
                                 </div>
-                                <button
-                                    @click="removeLineItem(item.id)"
-                                    class="rounded-md bg-grey-5 p-2 text-grey-50 transition-colors hover:bg-red-100 hover:text-red-700"
+                                <div
+                                    class="flex h-full flex-col justify-between"
                                 >
-                                    <XIcon class="h-4 w-4" />
-                                </button>
+                                    <button
+                                        @click="removeLineItem(item.id)"
+                                        class="rounded-md p-2 text-grey-40 transition-colors hover:bg-red-100 hover:text-red-700"
+                                    >
+                                        <TrashIcon class="h-4 w-4" />
+                                    </button>
+                                    <!-- <CartQuantitySelector /> -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -102,7 +107,8 @@
 
 <script setup lang="ts">
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import { ShoppingBagIcon, XIcon } from "@heroicons/vue/outline";
+import { ShoppingBagIcon } from "@heroicons/vue/outline";
+import { TrashIcon } from "@heroicons/vue/solid";
 import { UseStoreRefs } from "~/types/stores";
 
 const store = useStore();

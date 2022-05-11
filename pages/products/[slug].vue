@@ -112,17 +112,11 @@
                         >
                             <div>Add to cart</div>
                         </button>
-                        <div
-                            class="inline-flex items-center space-x-3 rounded-md bg-grey-10 px-4 py-3 font-medium text-grey-50 transition-colors hover:bg-grey-20"
-                        >
-                            <button @click="decrement()" class="h-full">
-                                <MinusIcon class="h-3 w-3" />
-                            </button>
-                            <div class="text-grey-60">{{ quantity }}</div>
-                            <button @click="increment()" class="h-full">
-                                <PlusIcon class="h-3 w-3" />
-                            </button>
-                        </div>
+                        <CartQuantitySelector
+                            :quantity="quantity"
+                            :increment="increment"
+                            :decrement="decrement"
+                        />
                     </div>
                 </div>
             </div>
@@ -134,7 +128,6 @@
 <script setup lang="ts">
 import { Product } from "@medusajs/medusa";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
-import { PlusIcon, MinusIcon } from "@heroicons/vue/solid";
 import { UseStoreRefs } from "~~/types/stores";
 
 const { $medusa } = useNuxtApp();
