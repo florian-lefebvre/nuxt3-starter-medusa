@@ -107,10 +107,12 @@
                     <div class="mt-10 flex space-x-4">
                         <button
                             @click="addToCart()"
-                            :disabled="adding"
+                            :disabled="adding || !hasStock"
                             class="flex w-full items-center justify-center space-x-2 rounded-md bg-violet-50 px-6 py-3 font-medium text-white transition-all hover:bg-violet-60 focus:ring focus:ring-violet-60 focus:ring-offset-2 focus:ring-offset-white disabled:bg-grey-40"
                         >
-                            <div>Add to cart</div>
+                            <div>
+                                {{ hasStock ? "Add to cart" : "Limit reached" }}
+                            </div>
                         </button>
                         <CartQuantitySelector
                             :quantity="quantity"
@@ -191,7 +193,8 @@ const { formatPrice } = usePrices();
 const price = computed(() => formatPrice(variant.value));
 
 const { variantQuantity } = useHelpers();
-const { quantity, increment, decrement, reset } = variantQuantity(variant);
+const { quantity, increment, decrement, reset, hasStock } =
+    variantQuantity(variant);
 
 const imageUrl = ref(
     product.value.thumbnail ||
