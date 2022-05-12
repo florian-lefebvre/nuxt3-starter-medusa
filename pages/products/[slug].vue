@@ -116,6 +116,7 @@
                             :quantity="quantity"
                             :increment="increment"
                             :decrement="decrement"
+                            size="normal"
                         />
                     </div>
                 </div>
@@ -189,16 +190,8 @@ const { formatPrice } = usePrices();
 
 const price = computed(() => formatPrice(variant.value));
 
-const quantity = ref(1);
-
-const increment = () => {
-    quantity.value++;
-};
-
-const decrement = () => {
-    if (quantity.value === 1) return;
-    quantity.value--;
-};
+const { variantQuantity } = useHelpers();
+const { quantity, increment, decrement, reset } = variantQuantity(variant);
 
 const imageUrl = ref(
     product.value.thumbnail ||
@@ -211,9 +204,11 @@ const store = useStore();
 const { adding }: UseStoreRefs = storeToRefs(store) as any;
 const { addVariantToCart } = store;
 
-const addToCart = async () =>
+const addToCart = async () => {
     await addVariantToCart({
         variantId: variant.value.id,
         quantity: quantity.value,
     });
+    reset();
+};
 </script>

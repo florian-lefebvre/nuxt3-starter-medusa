@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="flex h-full flex-col justify-between"
+                                    class="flex h-full flex-col items-end justify-between"
                                 >
                                     <button
                                         @click="removeLineItem(item.id)"
@@ -71,7 +71,12 @@
                                     >
                                         <TrashIcon class="h-4 w-4" />
                                     </button>
-                                    <!-- <CartQuantitySelector /> -->
+                                    <CartQuantitySelector
+                                        :quantity="item.quantity"
+                                        :increment="() => {}"
+                                        :decrement="() => {}"
+                                        size="small"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -124,4 +129,8 @@ const itemsQuantity = computed(() => {
 });
 
 const { formatMoneyAmount, applyTax } = usePrices();
+
+watch(cart, () => {
+    console.log("cart changed");
+});
 </script>

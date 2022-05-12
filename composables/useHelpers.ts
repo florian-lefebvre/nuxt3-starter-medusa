@@ -1,34 +1,42 @@
-import { LineItem, Product } from "@medusajs/medusa";
+import { ProductVariant } from "@medusajs/medusa";
+import { ComputedRef } from "vue";
 
 export const useHelpers = () => {
-    const quantity = (item: LineItem): number => item.quantity;
+    const variantQuantity = (
+        variant: ComputedRef<ProductVariant>,
+        initial: number = 1
+    ) => {
+        const quantity = ref(initial);
 
-    const sum = (prev: number, next: number): number => prev + next;
+        // TODO: check quantity already in cart
 
-    const getSlug = (path: string): string => {
-        const temp = path.split("/");
-        return temp[temp.length - 1];
-    };
+        watch(variant, () => {
+            if (variant.value.inventory_quantity < quantity.value) {
+                quantity.value = variant.value.inventory_quantity;
+            }
+        });
 
-    const resetOptions = (product: Product) => {
-        const variantId = product.variants.slice(0).reverse()[0].id;
-        const size = product.variants.slice(0).reverse()[0].title;
+        const increment = () => {
+            if (quantity.value === variant.value.inventory_quantity) return;
+            quantity.value++;
+        };
+
+        const decrement = () => {
+            if (quantity.value === 1) return;
+            quantity.value--;
+        };
+
+        const reset = () => {
+            quantity.value = initial;
+        };
+
         return {
-            variantId,
-            quantity: 1,
-            size,
+            quantity,
+            increment,
+            decrement,
+            reset,
         };
     };
 
-    const isEmpty = (obj): boolean =>
-        [Object, Array].includes((obj || {}).constructor) &&
-        !Object.entries(obj || {}).length;
-
-    return {
-        quantity,
-        sum,
-        getSlug,
-        resetOptions,
-        isEmpty,
-    };
+    return { variantQuantity };
 };
