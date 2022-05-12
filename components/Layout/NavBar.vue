@@ -53,7 +53,7 @@
                     leave-from-class="transform opacity-100 scale-100"
                     leave-to-class="transform opacity-0 scale-95"
                 >
-                    <CartOverwiew v-if="route.fullPath !== '/checkout'" />
+                    <CartOverview v-if="route.fullPath !== '/checkout'" />
                 </transition>
             </div>
         </div>
